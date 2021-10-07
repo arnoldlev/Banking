@@ -13,9 +13,9 @@ import bank.accounts.Account;
 public class DatabaseManager {
     
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3433104";
-    private static final String USERNAME = "sql3433104";
-    private static final String PASSWORD = "yr2bIzaZQf";
+    private static final String DATABASE_URL = "jdbc:mysql://144.217.66.186:3306/arnoldle_bank";
+    private static final String USERNAME = "arnoldle";
+    private static final String PASSWORD = "u[r@4OY7bYl44W";
     private Connection connection;
     private Properties properties;
     
