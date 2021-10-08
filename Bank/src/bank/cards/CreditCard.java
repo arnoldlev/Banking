@@ -20,45 +20,62 @@ public class CreditCard extends Card {
 	}
 
 	/**
-	 * @return the interest
+	 * @return Get the interest rate
 	 */
 	public double getInterest() {
 		return interest;
 	}
 
+
 	/**
-	 * @param interest the interest to set
+	 * @param interest The interest rate to set
+	 * @return True if parameter is greater than 0
 	 */
-	public void setInterest(double interest) {
+	public boolean setInterest(double interest) {
+		if (interest <= 0) {
+			return false;
+		}
 		this.interest = interest;
+		return true;
 	}
 
 	/**
-	 * @return the maxBalance
+	 * @return The maximum balance allocated
 	 */
 	public double getMaxBalance() {
 		return maxBalance;
 	}
 
 	/**
-	 * @param maxBalance the maxBalance to set
+	 * @param maxBalance Set the maximum balance allowed
+	 * @return True if parameter is greater than 0
 	 */
-	public void setMaxBalance(double maxBalance) {
+	public boolean setMaxBalance(double maxBalance) {
+		if (maxBalance <= 0) {
+			return false;
+		}
 		this.maxBalance = maxBalance;
+		return true;
 	}
 
 	/**
-	 * @return the avaliableBalance
+	 * @return Available balance left
 	 */
 	public double getAvaliableBalance() {
 		return avaliableBalance;
 	}
 
 	/**
-	 * @param avaliableBalance the avaliableBalance to set
+	 * @param avaliableBalance Available balance left
+	 * @return True if parameter is positive
+	 * @apiNote This cannot be negative!
 	 */
-	public void setAvaliableBalance(double avaliableBalance) {
+	public boolean setAvaliableBalance(double avaliableBalance) {
+		if (avaliableBalance < 0) {
+			return false;
+		}
 		this.avaliableBalance = avaliableBalance;
+		return true;
 	}
 
 }

@@ -25,89 +25,105 @@ public abstract class Loan {
 		setOpenDate(new Date());
 	}
 	
-	
-	/**
-	 * @return the loanID
-	 */
+
 	public int getLoanID() {
 		return loanID;
 	}
-	
-	/**
-	 * @param loanID the loanID to set
-	 */
+
 	private void setLoanID(int loanID) {
 		this.loanID = loanID;
 	}
 
 	/**
-	 * @return the loanedAmount
+	 * @return The amount loaned
 	 */
 	public double getLoanedAmount() {
 		return loanedAmount;
 	}
 
 	/**
-	 * @param loanedAmount the loanedAmount to set
+	 * @param loanedAmount The amount loaned
+	 * @return True if parameter is greater than 0
 	 */
-	public void setLoanedAmount(double loanedAmount) {
+	public boolean setLoanedAmount(double loanedAmount) { 
+		if (loanedAmount <= 0) {
+			return false;
+		}
 		this.loanedAmount = loanedAmount;
+		return true;
 	}
 
 	/**
-	 * @return the interest
+	 * @return Get the interest rate
 	 */
 	public double getInterest() {
 		return interest;
 	}
 
+
 	/**
-	 * @param interest the interest to set
+	 * @param interest The interest rate to set
+	 * @return True if parameter is greater than 0
 	 */
-	public void setInterest(double interest) {
+	public boolean setInterest(double interest) {
+		if (interest <= 0) {
+			return false;
+		}
 		this.interest = interest;
+		return true;
 	}
 
 	/**
-	 * @return the amountLeft
+	 * @return The amount left to be paid
 	 */
 	public double getAmountLeft() {
 		return amountLeft;
 	}
 
 	/**
-	 * @param amountLeft the amountLeft to set
+	 * @param amountLeft The amount left to be paid
+	 * @return True if parameter is a positive number, including 0
 	 */
-	public void setAmountLeft(double amountLeft) {
+	public boolean setAmountLeft(double amountLeft) {
+		if (amountLeft < 0) {
+			return false;
+		}
 		this.amountLeft = amountLeft;
+		return true;
 	}
 
 	/**
-	 * @return the openDate
+	 * @return Date when loan was issued
 	 */
 	public Date getOpenDate() {
 		return openDate;
 	}
 
 	/**
-	 * @param openDate the openDate to set
+	 * @param openDate Date when loan was issued
 	 */
-	public void setOpenDate(Date openDate) {
+	private void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
 
 	/**
-	 * @return the termInYears
+	 * @return The term in years
 	 */
 	public int getTermInYears() {
 		return termInYears;
 	}
 
+
 	/**
-	 * @param termInYears the termInYears to set
+	 * @param termInYears Set the term in years
+	 * @return True if parameter is greater than 0
 	 */
-	public void setTermInYears(int termInYears) {
+	public boolean setTermInYears(int termInYears) {
+		if (termInYears <= 0) {
+			return false;
+		}
 		this.termInYears = termInYears;
+		return true;
 	}
 	
 	public abstract boolean makePayment(double amount);

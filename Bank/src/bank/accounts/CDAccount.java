@@ -3,27 +3,25 @@ package bank.accounts;
 import java.util.ArrayList;
 import java.util.Date;
 
-import bank.customer.Customer;
-
 public class CDAccount extends Account {
 	
 	private int termInYears;
 	private double interest;
 	private double minDeposit;
 
-	public CDAccount(Customer customer) {
-		super(customer);
+	public CDAccount() {
+		super();
 	}
 	
-	public CDAccount(long ID, Customer customer, double bal, Date open, ArrayList<Statement> stats, int term, double interest, double deposit) {
-		super(ID, customer, bal, open, stats);
+	public CDAccount(long ID, double bal, Date open, ArrayList<Statement> stats, int term, double interest, double deposit) {
+		super(ID, bal, open, stats);
 		setTermInYears(term);
 		setInterest(interest);
 		setMinDeposit(deposit);
 	}
 
 	/**
-	 * @return the termInYears
+	 * @return The term in years
 	 */
 	public int getTermInYears() {
 		return termInYears;
@@ -31,46 +29,56 @@ public class CDAccount extends Account {
 
 
 	/**
-	 * @param termInYears the termInYears to set
+	 * @param termInYears Set the term in years
+	 * @return True if parameter is greater than 0
 	 */
-	public void setTermInYears(int termInYears) {
+	public boolean setTermInYears(int termInYears) {
+		if (termInYears <= 0) {
+			return false;
+		}
 		this.termInYears = termInYears;
+		return true;
 	}
 
-
-
 	/**
-	 * @return the interest
+	 * @return Get the interest rate
 	 */
 	public double getInterest() {
 		return interest;
 	}
 
 
-
 	/**
-	 * @param interest the interest to set
+	 * @param interest The interest rate to set
+	 * @return True if parameter is greater than 0
 	 */
-	public void setInterest(double interest) {
+	public boolean setInterest(double interest) {
+		if (interest <= 0) {
+			return false;
+		}
 		this.interest = interest;
+		return true;
 	}
 
 
-
 	/**
-	 * @return the minDeposit
+	 * @return The minimum amount required to deposit
 	 */
 	public double getMinDeposit() {
 		return minDeposit;
 	}
 
-
-
+	
 	/**
-	 * @param minDeposit the minDeposit to set
+	 * @param minDeposit The minimum amount required to deposit
+	 * @return True if parameter is greater than 0
 	 */
-	public void setMinDeposit(double minDeposit) {
+	public boolean setMinDeposit(double minDeposit) {
+		if (minDeposit <= 0) {
+			return false;
+		}
 		this.minDeposit = minDeposit;
+		return true;
 	}
 
 

@@ -9,64 +9,62 @@ public class Statement {
 	private Date date;
 	private String description;
 	
+	private Statement(int accID, Date date, String desc) {
+		setAccountID(accID);
+		setDate(date);
+		setDescription(desc);
+	}
+	
 	private Statement(int statID, int accID, Date date, String desc) {
 		setStatementID(statID);
 		setAccountID(accID);
 		setDate(date);
 		setDescription(desc);
 	}
-	
-	/**
-	 * @return the statementID
-	 */
+
+
 	public int getStatementID() {
 		return statementID;
 	}
-	
-	/**
-	 * @param statementID the statementID to set
-	 */
-	public void setStatementID(int statementID) {
-		this.statementID = statementID;
+
+	private void setStatementID(int statementID) {
+		this.statementID = statementID; // TODO: Set statement ID after data entered into database
 	}
 
-	/**
-	 * @return the accountID
-	 */
 	public int getAccountID() {
 		return accountID;
 	}
 
 	/**
-	 * @param accountID the accountID to set
+	 * @apiNote Private because outside classes should not change this
 	 */
-	public void setAccountID(int accountID) {
+	private void setAccountID(int accountID) {
 		this.accountID = accountID;
 	}
 
 	/**
-	 * @return the date
+	 * @return Get the date transaction was made
 	 */
 	public Date getDate() {
 		return date;
 	}
 
 	/**
-	 * @param date the date to set
+	 * @param date Set the date transaction made
 	 */
 	public void setDate(Date date) {
 		this.date = date;
 	}
 
 	/**
-	 * @return the description
+	 * @return The description of the statement
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param description The description of the statement
 	 */
 	public void setDescription(String description) {
 		this.description = description;

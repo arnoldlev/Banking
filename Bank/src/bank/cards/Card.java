@@ -23,55 +23,56 @@ public abstract class Card {
 	
 	
 	/**
-	 * @return the cardNumber
+	 * @return The 16 digit credit card number
 	 */
 	public String getCardNumber() {
 		return cardNumber;
 	}
 	
 	/**
-	 * @param cardNumber the cardNumber to set
+	 * @param cardNumber The 16 digit creditcard number
 	 */
 	private void setCardNumber(String cardNumber) {
-		this.cardNumber = cardNumber; // TODO: Generate valid card number using algorithm
+		this.cardNumber = cardNumber; 
 	}
 	
 	/**
-	 * @return the csv
+	 * @return The 3 digit security code
 	 */
 	public int getCsv() {
 		return csv;
 	}
+	
 	/**
-	 * @param csv the csv to set
+	 * @param csv The 3 digit security code
 	 */
 	public void setCsv(int csv) {
 		this.csv = csv;
 	}
 
 	/**
-	 * @return the expireDate
+	 * @return The date when the card is expired
 	 */
 	public Date getExpireDate() {
 		return expireDate;
 	}
 
 	/**
-	 * @param expireDate the expireDate to set
+	 * @param expireDate The date when the card is expired
 	 */
 	public void setExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
 	}
 
 	/**
-	 * @return the name
+	 * @return Name on card
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name Name on card
 	 */
 	public void setName(String name) {
 		this.name = name;

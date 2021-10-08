@@ -1,3 +1,7 @@
+/**
+ * @author Arnold Lev
+ * A manager class that has direct access to database
+ */
 package bank.main;
 
 import java.sql.Connection;
@@ -12,6 +16,7 @@ import bank.accounts.Account;
 
 public class DatabaseManager {
     
+	// My web host MySQL Database
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DATABASE_URL = "jdbc:mysql://144.217.66.186:3306/arnoldle_bank";
     private static final String USERNAME = "arnoldle";

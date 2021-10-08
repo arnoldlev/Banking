@@ -3,26 +3,21 @@ package bank.accounts;
 import java.util.ArrayList;
 import java.util.Date;
 
-import bank.customer.Customer;
-
 public abstract class Account {
 	
 	private int accountID;
-	private Customer accountHolder;
 	private double balance;
 	private Date openDate;
 	private ArrayList<Statement> statements;
 	
-	public Account(long ID, Customer customer, double bal, Date open, ArrayList<Statement> stats) {
+	public Account(long ID, double bal, Date open, ArrayList<Statement> stats) {
 		setAccountID(accountID);
-		setAccountHolder(customer);
 		setBalance(bal);
 		setOpenDate(open);
 		setStatements(stats);
 	}
 	
-	public Account(Customer customer) {
-		setAccountHolder(customer);
+	public Account() {
 		setOpenDate(new Date());
 		setStatements(new ArrayList<Statement>());
 	}
@@ -32,64 +27,60 @@ public abstract class Account {
 	}
 
 	private void setAccountID(int accountID) {
-		this.accountID = accountID; //TODO: Generate account ID
-	}
-	
-	
-	/**
-	 * @return the accountHolder
-	 */
-	public Customer getAccountHolder() {
-		return accountHolder;
+		this.accountID = accountID; //TODO: Set this after inserting data into database tables
 	}
 
 	/**
-	 * @param accountHolder the accountHolder to set
-	 */
-	public void setAccountHolder(Customer accountHolder) {
-		this.accountHolder = accountHolder;
-	}
-
-	/**
-	 * @return the balance
+	 * @return Available balance to use
 	 */
 	public double getBalance() {
 		return balance;
 	}
 
 	/**
-	 * @param balance the balance to set
+	 * @param balance Balance to set available
+	 * @implNote Balance can be negative!
 	 */
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
 	/**
-	 * @return the openDate
+	 * @return Get date account was created
 	 */
 	public Date getOpenDate() {
 		return openDate;
 	}
 
 	/**
-	 * @param openDate the openDate to set
+	 * @param openDate set when the account was opened
+	 * @apiNote Private because this should not be changed outside
 	 */
-	public void setOpenDate(Date openDate) {
+	private void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
 	
 	/**
-	 * @return the statements
+	 * @return Retrieve all statements
 	 */
 	public ArrayList<Statement> getStatements() {
 		return statements;
 	}
 
 	/**
-	 * @param statements the statements to set
+	 * @param statements Set the statements retrieved from database
+	 * @apiNote Private because this should not be changed outside
 	 */
-	public void setStatements(ArrayList<Statement> statements) {
+	private void setStatements(ArrayList<Statement> statements) {
 		this.statements = statements;
+	}
+	
+	/**
+	 * Add a statement to the account
+	 * @param statement Statement object
+	 */
+	public void addStatement(Statement statement) {
+		// TODO: Develop creating a statement
 	}
 	
 	

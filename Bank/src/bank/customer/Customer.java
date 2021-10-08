@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 import bank.accounts.Account;
 import bank.cards.Card;
+import bank.cards.CreditCard;
 import bank.loans.Loan;
 
 public class Customer {
 	
-	private long ID;
+	private long broncoID;
 	private String fullName;
 	private String fullAddress;
 	private String phoneNumber;
@@ -33,25 +34,23 @@ public class Customer {
 		setLoans(new ArrayList<Loan>());
 	}
 
-	// Retrieve bronco id 
-	public long getID() {
-		return ID;
+	
+	public long getBroncoID() {
+		return broncoID;
 	}
 
-	// Outside classes should not tamper with bronco ID
-	private void setID(long iD) {
-		ID = iD; 
+	private void setID(long id) {
+		this.broncoID = id; 
 	}
 
-	// Get customers full name
 	public String getFullName() {
 		return fullName;
 	}
 
+
 	/**
-	 * @author Arnold Lev
-	 * @param fullName {string}
-	 * @return True if length is > 1 otherwise False
+	 * @param fullName First and Last name of student
+	 * @return True if parameter has length greater than 1
 	 */
 	public boolean setFullName(String fullName) {
 		if (fullName.length() < 1) {
@@ -61,30 +60,27 @@ public class Customer {
 		return true;
 	}
 	
-	// Get customers full address
+	
 	public String getFullAddress() {
 		return fullAddress;
 	}
 	
 	/**
-	 * @author Arnold Lev
-	 * @param add {String}
-	 * @return True if valid address otherwise False
+	 * @param address Full Address of student, including zipcode
+	 * @return True if address is valid
 	 */
 	public boolean setFullAddress(String add) {
 		this.fullAddress = add;
 		return true; //TODO: Validate address
 	}
 
-	// Get customers phone number
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
 	/**
-	 * @author Arnold Lev
-	 * @param phoneNUmber {String}
-	 * @return True if valid phone number otherwise False
+	 * @param phoneNumber Phone number in ###-###-#### format
+	 * @return True if phone number is valid
 	 */
 	public boolean setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
@@ -92,45 +88,75 @@ public class Customer {
 	}
 
 	/**
-	 * @return the accounts
+	 * @return Get all accounts
 	 */
 	public ArrayList<Account> getAccounts() {
 		return accounts;
 	}
 
 	/**
-	 * @param accounts the accounts to set
+	 * @param accounts All accounts retrieved from database
 	 */
-	public void setAccounts(ArrayList<Account> accounts) {
+	private void setAccounts(ArrayList<Account> accounts) {
 		this.accounts = accounts;
 	}
 
 	/**
-	 * @return the cards
+	 * @return Get all debit and credit cards
 	 */
 	public ArrayList<Card> getCards() {
 		return cards;
 	}
 
 	/**
-	 * @param cards the cards to set
+	 * @param cards All cards retrieved from database
 	 */
-	public void setCards(ArrayList<Card> cards) {
+	private void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
 	}
 
 	/**
-	 * @return the loans
+	 * @return Get all loans
 	 */
 	public ArrayList<Loan> getLoans() {
 		return loans;
 	}
 
 	/**
-	 * @param loans the loans to set
+	 * @param loans All loans retrieved from database
 	 */
-	public void setLoans(ArrayList<Loan> loans) {
+	private void setLoans(ArrayList<Loan> loans) {
 		this.loans = loans;
+	}
+	
+	/**
+	 * Open an account for a student
+	 * @param acc Account thats to be added
+	 * @return True if creation went successful
+	 */
+	public boolean addAccount(Account acc) {
+		//TODO: Creation of account
+		return false;
+	}
+	
+	/**
+	 * Open a credit card
+	 * @param card Card thats to be added
+	 * @return True if creation went successful
+	 */
+	public boolean addCreditCard(CreditCard card) {
+		//TODO: Creation of credit card
+		return false;
+	}
+	
+	/**
+	 * Take out a student or personal loan
+	 * @param loan Loan thats to be added
+	 * @return True if creation went successful
+	 */
+	public boolean addLoan(Loan loan) {
+		//TODO: Creation of loan
+		return false;
 	}
 	
 	

@@ -16,31 +16,43 @@ public class DebitCard extends Card {
 	}
 
 	/**
-	 * @return the maxTransaction
+	 * @return Maximum transaction amount allowed to make
 	 */
 	public double getMaxTransaction() {
 		return maxTransaction;
 	}
 
 	/**
-	 * @param maxTransaction the maxTransaction to set
+	 * @param maxTransaction Maximum transaction amount allowed to make
+	 * @return True if parameter is positive
+	 * @apiNote Customer can choose to have a 0 max!
 	 */
-	public void setMaxTransaction(double maxTransaction) {
+	public boolean setMaxTransaction(double maxTransaction) {
+		if (maxTransaction < 0) {
+			return false;
+		}
 		this.maxTransaction = maxTransaction;
+		return true;
 	}
 
 	/**
-	 * @return the atmLimit
+	 * @return The maximum amount allowed to withdraw from ATMs
 	 */
 	public double getAtmLimit() {
 		return atmLimit;
 	}
 
 	/**
-	 * @param atmLimit the atmLimit to set
+	 * @param atmLimit The maximum amount allowed to withdraw from ATMs
+	 * @return True if parameter is positive
+	 * @apiNote Customer can choose to have a 0 max!
 	 */
-	public void setAtmLimit(double atmLimit) {
+	public boolean setAtmLimit(double atmLimit) {
+		if (atmLimit < 0) {
+			return false;
+		}
 		this.atmLimit = atmLimit;
+		return true;
 	}
 
 }

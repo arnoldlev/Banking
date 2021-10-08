@@ -3,34 +3,39 @@ package bank.accounts;
 import java.util.ArrayList;
 import java.util.Date;
 
-import bank.customer.Customer;
-
 public class SavingsAccount extends Account {
 	
 	private double interest;
 
-	public SavingsAccount(Customer customer) {
-		super(customer);
+	public SavingsAccount() {
+		super();
 	}
 	
-	public SavingsAccount(long ID, Customer customer, double bal, Date open, ArrayList<Statement> stats, double interest) {
-		super(ID, customer, bal, open, stats);
+	public SavingsAccount(long ID,  double bal, Date open, ArrayList<Statement> stats, double interest) {
+		super(ID, bal, open, stats);
 		setInterest(interest);
 	}
 
 	/**
-	 * @return the interest
+	 * @return Get the interest rate
 	 */
 	public double getInterest() {
 		return interest;
 	}
 
+
 	/**
-	 * @param interest the interest to set
+	 * @param interest The interest rate to set
+	 * @return True if parameter is greater than 0
 	 */
-	public void setInterest(double interest) {
+	public boolean setInterest(double interest) {
+		if (interest <= 0) {
+			return false;
+		}
 		this.interest = interest;
+		return true;
 	}
+	
 
 	@Override
 	public boolean deposit(double amount) {

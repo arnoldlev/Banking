@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import bank.cards.DebitCard;
-import bank.customer.Customer;
 
 public class CheckingAccount extends Account {
 	
@@ -13,45 +12,52 @@ public class CheckingAccount extends Account {
 	private DebitCard card;
 	
 
-	public CheckingAccount(Customer customer) {
-		super(customer);
+	public CheckingAccount() {
+		super();
 		//TODO: generate debit card
 	}
 	
-	public CheckingAccount(long ID, Customer customer, double bal, Date open, ArrayList<Statement> stats, double charge, DebitCard card) {
-		super(ID, customer, bal, open, stats);
+	public CheckingAccount(long ID, double bal, Date open, ArrayList<Statement> stats, double charge, DebitCard card) {
+		super(ID, bal, open, stats);
 		setMonthlyCharge(charge);
 		setCard(card);
 	}
 
 	/**
-	 * @return the monthlyCharge
+	 * @return The monthly charge for having an open account
 	 */
 	public double getMonthlyCharge() {
 		return monthlyCharge;
 	}
 
 	/**
-	 * @param monthlyCharge the monthlyCharge to set
+	 * @param monthlyCharge Set the monthly charge
+	 * @return True if parameter is greater than 0
 	 */
 	
-	public void setMonthlyCharge(double monthlyCharge) {
+	public boolean setMonthlyCharge(double monthlyCharge) {
+		if (monthlyCharge <= 0) {
+			return false;
+		}
 		this.monthlyCharge = monthlyCharge;
+		return true;
 	}
 
 	/**
-	 * @return the card
+	 * @return Reference to the associated DebitCard
 	 */
 	public DebitCard getCard() {
 		return card;
 	}
 
 	/**
-	 * @param card the card to set
+	 * @param card The debitcard attached
+	 * @apiNote Private because outside should not change this
 	 */
-	public void setCard(DebitCard card) {
+	private void setCard(DebitCard card) {
 		this.card = card;
 	}
+	
 
 	@Override
 	public boolean deposit(double amount) {
