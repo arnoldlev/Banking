@@ -17,7 +17,7 @@ public class CheckingAccount extends Account {
 		//TODO: generate debit card
 	}
 	
-	public CheckingAccount(long ID, double bal, Date open, ArrayList<Statement> stats, double charge, DebitCard card) {
+	public CheckingAccount(long ID, double bal, Date open, ArrayList<Transaction> stats, double charge, DebitCard card) {
 		super(ID, bal, open, stats);
 		setMonthlyCharge(charge);
 		setCard(card);

@@ -13,7 +13,7 @@ public class CDAccount extends Account {
 		super();
 	}
 	
-	public CDAccount(long ID, double bal, Date open, ArrayList<Statement> stats, int term, double interest, double deposit) {
+	public CDAccount(long ID, double bal, Date open, ArrayList<Transaction> stats, int term, double interest, double deposit) {
 		super(ID, bal, open, stats);
 		setTermInYears(term);
 		setInterest(interest);

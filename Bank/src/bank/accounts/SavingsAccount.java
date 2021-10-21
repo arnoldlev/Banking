@@ -11,7 +11,7 @@ public class SavingsAccount extends Account {
 		super();
 	}
 	
-	public SavingsAccount(long ID,  double bal, Date open, ArrayList<Statement> stats, double interest) {
+	public SavingsAccount(long ID,  double bal, Date open, ArrayList<Transaction> stats, double interest) {
 		super(ID, bal, open, stats);
 		setInterest(interest);
 	}

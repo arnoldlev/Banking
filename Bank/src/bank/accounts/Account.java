@@ -8,9 +8,9 @@ public abstract class Account {
 	private int accountID;
 	private double balance;
 	private Date openDate;
-	private ArrayList<Statement> statements;
+	private ArrayList<Transaction> statements;
 	
-	public Account(long ID, double bal, Date open, ArrayList<Statement> stats) {
+	public Account(long ID, double bal, Date open, ArrayList<Transaction> stats) {
 		setAccountID(accountID);
 		setBalance(bal);
 		setOpenDate(open);
@@ -19,7 +19,7 @@ public abstract class Account {
 	
 	public Account() {
 		setOpenDate(new Date());
-		setStatements(new ArrayList<Statement>());
+		setStatements(new ArrayList<Transaction>());
 	}
 
 	public int getAccountID() {
@@ -63,7 +63,7 @@ public abstract class Account {
 	/**
 	 * @return Retrieve all statements
 	 */
-	public ArrayList<Statement> getStatements() {
+	public ArrayList<Transaction> getStatements() {
 		return statements;
 	}
 
@@ -71,7 +71,7 @@ public abstract class Account {
 	 * @param statements Set the statements retrieved from database
 	 * @apiNote Private because this should not be changed outside
 	 */
-	private void setStatements(ArrayList<Statement> statements) {
+	private void setStatements(ArrayList<Transaction> statements) {
 		this.statements = statements;
 	}
 	
@@ -79,7 +79,7 @@ public abstract class Account {
 	 * Add a statement to the account
 	 * @param statement Statement object
 	 */
-	public void addStatement(Statement statement) {
+	public void addStatement(Transaction statement) {
 		// TODO: Develop creating a statement
 	}
 	

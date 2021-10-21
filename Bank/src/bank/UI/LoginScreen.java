@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
+import bank.main.MainScreen;
+
 public class LoginScreen extends JPanel {
 	
 	private static final long serialVersionUID = 1L;

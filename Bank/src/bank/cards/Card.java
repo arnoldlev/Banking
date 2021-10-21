@@ -4,6 +4,7 @@ import java.util.Date;
 
 public abstract class Card {
 	
+	private int cardID;
 	private String cardNumber;
 	private int csv;
 	private Date expireDate;
@@ -16,11 +17,26 @@ public abstract class Card {
 		setName(name);
 	}
 	
+	public Card(int ID, String num, int csv, Date expire, String name) {
+		setCardID(ID);
+		setCardNumber(num);
+		setCsv(csv);
+		setExpireDate(expire);
+		setName(name);
+	}
+	
 	public Card(String name) {
 		setName(name);
 		//TODO: Generate card
 	}
 	
+	public int getCardID() {
+		return cardID;
+	}
+	
+	private void setCardID(int c) {
+		cardID = c;
+	}
 	
 	/**
 	 * @return The 16 digit credit card number

@@ -1,14 +1,14 @@
-package bank.UI;
+package bank.main;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Font;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.border.MatteBorder;
+
+import bank.UI.AccountTab;
+import bank.UI.CardTab;
+import bank.UI.InfoTab;
 
 public class MainScreen extends JPanel {
 
@@ -17,7 +17,7 @@ public class MainScreen extends JPanel {
 	private JTabbedPane pane;
 	private JPanel mainScreen;
 	private JPanel accountScreen;
-	private JLabel welcome;
+	private JPanel cardScreen;
 	
 	public MainScreen() {
 		setLayout(new BorderLayout());
@@ -25,28 +25,15 @@ public class MainScreen extends JPanel {
 		pane = new JTabbedPane();
 		pane.setBorder(new MatteBorder(1, 1, 1, 1, Color.black));
 		
-		mainScreen = new JPanel();
-		welcome = new JLabel("Welcome <user>. Here you can create accounts, loans and cards.");
-		welcome.setFont(new Font("Arial", Font.PLAIN, 12));
-		mainScreen.add(welcome);
-		
-		accountScreen = new AccountScreen();
+		mainScreen = new InfoTab();
+		accountScreen = new AccountTab();
+		cardScreen = new CardTab();
 		
 		pane.add("Main Menu", mainScreen);
 		pane.add("Accounts", accountScreen);
+		pane.add("Cards", cardScreen);
 		
 		add(pane, BorderLayout.CENTER);
-		
-	}
-	
-	
-	private class AccountScreen extends JPanel {
-		
-		private static final long serialVersionUID = 1L;
-
-		public AccountScreen() {
-			setLayout(new FlowLayout());
-		}
 		
 	}
 	

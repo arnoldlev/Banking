@@ -2,44 +2,31 @@ package bank.accounts;
 
 import java.util.Date;
 
-public class Statement {
+public class Transaction {
 	
-	private int statementID;
-	private int accountID;
+	private int transactionID;
 	private Date date;
 	private String description;
+	private double amount;
 	
-	private Statement(int accID, Date date, String desc) {
-		setAccountID(accID);
+	public Transaction(Date date, String desc) {
 		setDate(date);
 		setDescription(desc);
 	}
 	
-	private Statement(int statID, int accID, Date date, String desc) {
-		setStatementID(statID);
-		setAccountID(accID);
+	public Transaction(int statID, Date date, String desc) {
+		setTransactionID(statID);
 		setDate(date);
 		setDescription(desc);
 	}
 
 
-	public int getStatementID() {
-		return statementID;
+	public int getTransactionID() {
+		return transactionID;
 	}
 
-	private void setStatementID(int statementID) {
-		this.statementID = statementID; // TODO: Set statement ID after data entered into database
-	}
-
-	public int getAccountID() {
-		return accountID;
-	}
-
-	/**
-	 * @apiNote Private because outside classes should not change this
-	 */
-	private void setAccountID(int accountID) {
-		this.accountID = accountID;
+	private void setTransactionID(int statementID) {
+		this.transactionID = statementID; // TODO: Set statement ID after data entered into database
 	}
 
 	/**
@@ -68,6 +55,20 @@ public class Statement {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	/**
+	 * @return the amount
+	 */
+	public double getAmount() {
+		return amount;
+	}
+
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 
 }

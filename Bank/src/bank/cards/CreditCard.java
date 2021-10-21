@@ -12,8 +12,8 @@ public class CreditCard extends Card {
 		super(name);
 	}
 	
-	public CreditCard(String num, int csv, Date expire, String name, double interest, double max, double bal) {
-		super(num, csv, expire, name);
+	public CreditCard(int ID, String num, int csv, Date expire, String name, double interest, double max, double bal) {
+		super(ID, num, csv, expire, name);
 		setInterest(interest);
 		setMaxBalance(max);
 		setAvaliableBalance(bal);
