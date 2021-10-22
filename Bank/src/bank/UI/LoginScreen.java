@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 
+import bank.customer.Customer;
 import bank.main.MainScreen;
 
 public class LoginScreen extends JPanel {
@@ -33,10 +34,14 @@ public class LoginScreen extends JPanel {
 		JPanel parent = (JPanel) getParent();
 		CardLayout card = (CardLayout) parent.getLayout();
 		
-		parent.add(new MainScreen(), "Main");
-		card.show(parent, "Main");
+		try {
+			Customer cust = new Customer(1232);
+			parent.add(new MainScreen(), "Main");
+			card.show(parent, "Main");
+		} catch (Exception edc) {
+			incorrectLogin.setVisible(true);
+		}
 		
-		//incorrectLogin.setVisible(true);
 	}
 
 	private void initComponents() {

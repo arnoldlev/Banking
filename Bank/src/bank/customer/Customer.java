@@ -27,6 +27,11 @@ public class Customer {
 		setLoans(loans);
 	}
 	
+	public Customer(long ID, String password) throws Exception {
+		//do stuff
+		throw new Exception();
+	}
+	
 	public Customer(long ID) {
 		setID(ID);
 		setAccounts(new ArrayList<Account>());

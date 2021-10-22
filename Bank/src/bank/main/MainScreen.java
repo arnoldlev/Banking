@@ -9,6 +9,7 @@ import javax.swing.border.MatteBorder;
 import bank.UI.AccountTab;
 import bank.UI.CardTab;
 import bank.UI.InfoTab;
+import bank.UI.LoansTab;
 
 public class MainScreen extends JPanel {
 
@@ -18,6 +19,7 @@ public class MainScreen extends JPanel {
 	private JPanel mainScreen;
 	private JPanel accountScreen;
 	private JPanel cardScreen;
+	private JPanel loansScreen;
 	
 	public MainScreen() {
 		setLayout(new BorderLayout());
@@ -28,10 +30,12 @@ public class MainScreen extends JPanel {
 		mainScreen = new InfoTab();
 		accountScreen = new AccountTab();
 		cardScreen = new CardTab();
+		loansScreen = new LoansTab();
 		
 		pane.add("Main Menu", mainScreen);
 		pane.add("Accounts", accountScreen);
 		pane.add("Cards", cardScreen);
+		pane.add("Loans", loansScreen);
 		
 		add(pane, BorderLayout.CENTER);
 		

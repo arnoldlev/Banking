@@ -2,7 +2,7 @@ package bank.loans;
 
 import java.util.Date;
 
-public abstract class Loan {
+public class Loan {
 	
 	private int loanID;
 	private double loanedAmount;
@@ -126,6 +126,8 @@ public abstract class Loan {
 		return true;
 	}
 	
-	public abstract boolean makePayment(double amount);
+	public boolean makePayment(double amount) {
+		return false;
+	}
 
 }

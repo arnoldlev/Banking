@@ -3,9 +3,6 @@ package bank.main;
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -16,6 +13,7 @@ public class Main {
 	private static void init() {
 		// Create the main frame
 		JFrame frame = new JFrame("Cal Poly Banking");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(500, 500);
 		frame.setLocationRelativeTo(null);
 
@@ -27,15 +25,8 @@ public class Main {
 		// Initialize the first screen
 		JPanel login = new LoginScreen();
 		main.add(login, "Login");
-		
-		JMenuBar menu = new JMenuBar();
-		JMenu options = new JMenu("Options");
-		JMenuItem log = new JMenuItem("Logout");
-		options.add(log);
-		menu.add(options);
 
 		// Add main panel to main frame and show
-		frame.setJMenuBar(menu);
 		frame.add(main);
 		frame.setVisible(true);
 	}

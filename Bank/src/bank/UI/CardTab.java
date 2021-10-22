@@ -1,8 +1,5 @@
 package bank.UI;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-
 import javax.swing.*;
 
 public class CardTab extends JPanel {
@@ -14,9 +11,9 @@ public class CardTab extends JPanel {
 	private JButton payment;
 	private JButton cardInfo;
 	private JButton deleteCard;
-	private JCheckBox onlyCredit;
-	private JCheckBox onlyDebit;
 	private JButton cardTrans;
+	private JButton openCard;
+	private JButton viewTrans;
 	
 	public CardTab() {
 		initComponents();
@@ -36,45 +33,45 @@ public class CardTab extends JPanel {
 		payment = new JButton();
 		cardInfo = new JButton();
 		deleteCard = new JButton();
-		onlyCredit = new JCheckBox();
-		onlyDebit = new JCheckBox();
 		cardTrans = new JButton();
+		openCard = new JButton();
+		viewTrans = new JButton();
 		
 		//======== scrollPane2 ========
 		cards.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		scrollPane2.setViewportView(cards);
 		add(scrollPane2);
-		scrollPane2.setBounds(30, 10, 360, 75);
+		scrollPane2.setBounds(10, 5, 400, 80);
 
 		//---- payment ----
 		payment.setText("Make Payment");
 		add(payment);
-		payment.setBounds(30, 235, 140, payment.getPreferredSize().height);
+		payment.setBounds(15, 115, 190, 23);
 
 		//---- cardInfo ----
 		cardInfo.setText("View Card Info");
 		add(cardInfo);
-		cardInfo.setBounds(30, 145, 140, cardInfo.getPreferredSize().height);
+		cardInfo.setBounds(15, 170, 190, 23);
 
 		//---- deleteCard ----
 		deleteCard.setText("Delete Card");
 		add(deleteCard);
-		deleteCard.setBounds(30, 190, 140, 23);
-
-		//---- onlyCredit ----
-		onlyCredit.setText("Credit Cards Only");
-		add(onlyCredit);
-		onlyCredit.setBounds(215, 150, 200, 23);
-
-		//---- onlyDebit ----
-		onlyDebit.setText("Debit Cards Only");
-		add(onlyDebit);
-		onlyDebit.setBounds(215, 165, 200, 23);
-
+		deleteCard.setBounds(15, 220, 190, 23);
+		
 		//---- cardTrans ----
 		cardTrans.setText("Add Transaction");
 		add(cardTrans);
-		cardTrans.setBounds(30, 100, 140, 23);
+		cardTrans.setBounds(235, 115, 190, 23);
+
+		//---- openCard ----
+		openCard.setText("Open Credit Card");
+		add(openCard);
+		openCard.setBounds(235, 170, 190, 25);
+
+		//---- viewTrans ----
+		viewTrans.setText("View Transactions");
+		add(viewTrans);
+		viewTrans.setBounds(235, 220, 190, 23);
 		
 	}
 	
