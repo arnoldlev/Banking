@@ -387,7 +387,7 @@ public class Customer {
 	/**
 	 * Take out a student or personal loan
 	 * @param loan Loan thats to be added
-	 * @return True if creation went successful
+	 * @return True if creation went successful!
 	 */
 	public boolean addLoan(Loan loan) {
 		if (loan == null) {
