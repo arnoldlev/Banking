@@ -1,6 +1,5 @@
 package bank.accounts;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class CDAccount extends Account {
@@ -13,8 +12,8 @@ public class CDAccount extends Account {
 		super();
 	}
 	
-	public CDAccount(long ID, double bal, Date open, ArrayList<Transaction> stats, int term, double interest, double deposit) {
-		super(ID, bal, open, stats);
+	public CDAccount(long ID, double bal, Date open, int term, double interest, double deposit) {
+		super(ID, bal, open);
 		setTermInYears(term);
 		setInterest(interest);
 		setMinDeposit(deposit);

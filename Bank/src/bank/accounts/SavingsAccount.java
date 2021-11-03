@@ -1,6 +1,5 @@
 package bank.accounts;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class SavingsAccount extends Account {
@@ -11,8 +10,8 @@ public class SavingsAccount extends Account {
 		super();
 	}
 	
-	public SavingsAccount(long ID,  double bal, Date open, ArrayList<Transaction> stats, double interest) {
-		super(ID, bal, open, stats);
+	public SavingsAccount(long ID, double bal, Date open, double interest) {
+		super(ID, bal, open);
 		setInterest(interest);
 	}
 

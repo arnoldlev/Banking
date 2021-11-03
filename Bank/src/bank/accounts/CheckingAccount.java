@@ -1,7 +1,6 @@
 
 package bank.accounts;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import bank.cards.DebitCard;
@@ -17,8 +16,8 @@ public class CheckingAccount extends Account {
 		//TODO: generate debit card
 	}
 	
-	public CheckingAccount(long ID, double bal, Date open, ArrayList<Transaction> stats, double charge, DebitCard card) {
-		super(ID, bal, open, stats);
+	public CheckingAccount(long ID, double bal, Date open,  double charge, DebitCard card) {
+		super(ID, bal, open);
 		setMonthlyCharge(charge);
 		setCard(card);
 	}
@@ -52,9 +51,8 @@ public class CheckingAccount extends Account {
 
 	/**
 	 * @param card The debitcard attached
-	 * @apiNote Private because outside should not change this
 	 */
-	private void setCard(DebitCard card) {
+	public void setCard(DebitCard card) {
 		this.card = card;
 	}
 	

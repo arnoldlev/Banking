@@ -1,32 +1,35 @@
 package bank.accounts;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Transaction {
 	
-	private int transactionID;
+	private long transactionID;
 	private Date date;
 	private String description;
 	private double amount;
 	
-	public Transaction(Date date, String desc) {
-		setDate(date);
+	public Transaction(String desc, double amount) {
+		setDate(new Date());
 		setDescription(desc);
+		setAmount(amount);
 	}
 	
-	public Transaction(int statID, Date date, String desc) {
+	public Transaction(long statID, Date date, String desc, double amount) {
 		setTransactionID(statID);
 		setDate(date);
 		setDescription(desc);
+		setAmount(amount);
 	}
 
 
-	public int getTransactionID() {
+	public long getTransactionID() {
 		return transactionID;
 	}
 
-	private void setTransactionID(int statementID) {
-		this.transactionID = statementID; // TODO: Set statement ID after data entered into database
+	public void setTransactionID(long statementID) {
+		this.transactionID = statementID; 
 	}
 
 	/**
@@ -69,6 +72,12 @@ public class Transaction {
 	 */
 	public void setAmount(double amount) {
 		this.amount = amount;
+	}
+	
+	public String[] toData() {
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/YYYY");
+		String[] data = { String.valueOf(getTransactionID()), format.format(getDate()), getDescription(), String.valueOf(getAmount())  };
+		return data;
 	}
 
 }

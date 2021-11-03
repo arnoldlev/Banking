@@ -1,41 +1,26 @@
 package bank.cards;
 
+import java.util.ArrayList;
 import java.util.Date;
+
+import bank.accounts.Transaction;
 
 public abstract class Card {
 	
-	private int cardID;
 	private String cardNumber;
 	private int csv;
 	private Date expireDate;
-	private String name;
+	private ArrayList<Transaction> transactions;
 	
-	public Card(String num, int csv, Date expire, String name) {
+	public Card(String num, int csv, Date expire) {
 		setCardNumber(num);
 		setCsv(csv);
 		setExpireDate(expire);
-		setName(name);
+		setTransactions(new ArrayList<Transaction>());
 	}
 	
-	public Card(int ID, String num, int csv, Date expire, String name) {
-		setCardID(ID);
-		setCardNumber(num);
-		setCsv(csv);
-		setExpireDate(expire);
-		setName(name);
-	}
-	
-	public Card(String name) {
-		setName(name);
+	public Card() {
 		//TODO: Generate card
-	}
-	
-	public int getCardID() {
-		return cardID;
-	}
-	
-	private void setCardID(int c) {
-		cardID = c;
 	}
 	
 	/**
@@ -50,6 +35,32 @@ public abstract class Card {
 	 */
 	private void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber; 
+	}
+	
+	/**
+	 * Add a transaction to the account
+	 * @param transaction Transaction object
+	 * @return 0 if successful, 1 if invalid funds, 2 for SQLException
+	 */
+	public int addTransaction(Transaction transaction) {
+		//TODO:
+		getTransactions().add(transaction);
+		return 0;
+	}
+	
+	/**
+	 * @return Retrieve all transactions
+	 */
+	public ArrayList<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	/**
+	 * @param transactions Set the transactions retrieved from database
+	 * @apiNote Private because this should not be changed outside
+	 */
+	private void setTransactions(ArrayList<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 	
 	/**
@@ -79,21 +90,6 @@ public abstract class Card {
 	public void setExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
 	}
-
-	/**
-	 * @return Name on card
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name Name on card
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	
 	
 

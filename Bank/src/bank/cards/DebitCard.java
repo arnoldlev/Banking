@@ -1,16 +1,18 @@
 package bank.cards;
 
+import java.util.Date;
+
 public class DebitCard extends Card {
 	
 	private double maxTransaction;
 	private double atmLimit;
 
-	public DebitCard(String name) {
-		super(name);
+	public DebitCard() {
+		super();
 	}
 	
-	public DebitCard(String name, double maxTrans, double limit) {
-		super(name);
+	public DebitCard(String num, int csv, Date expire, double maxTrans, double limit) {
+		super(num, csv, expire);
 		setMaxTransaction(maxTrans);
 		setAtmLimit(limit);
 	}

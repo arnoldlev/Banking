@@ -10,6 +10,7 @@ import bank.UI.AccountTab;
 import bank.UI.CardTab;
 import bank.UI.InfoTab;
 import bank.UI.LoansTab;
+import bank.customer.Customer;
 
 public class MainScreen extends JPanel {
 
@@ -21,16 +22,16 @@ public class MainScreen extends JPanel {
 	private JPanel cardScreen;
 	private JPanel loansScreen;
 	
-	public MainScreen() {
+	public MainScreen(Customer customer) {
 		setLayout(new BorderLayout());
 		
 		pane = new JTabbedPane();
 		pane.setBorder(new MatteBorder(1, 1, 1, 1, Color.black));
 		
-		mainScreen = new InfoTab();
-		accountScreen = new AccountTab();
-		cardScreen = new CardTab();
-		loansScreen = new LoansTab();
+		mainScreen = new InfoTab(customer);
+		accountScreen = new AccountTab(customer);
+		cardScreen = new CardTab(customer);
+		loansScreen = new LoansTab(customer);
 		
 		pane.add("Main Menu", mainScreen);
 		pane.add("Accounts", accountScreen);

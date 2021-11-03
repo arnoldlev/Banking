@@ -1,39 +1,117 @@
 package bank.loans;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+
+import bank.accounts.Transaction;
+import bank.main.DatabaseManager;
 
 public class Loan {
 	
-	private int loanID;
+	private long loanID;
 	private double loanedAmount;
 	private double amountLeft;
 	private double interest;
 	private Date openDate;
 	private int termInYears;
+	private ArrayList<Transaction> transactions;
 	
-	public Loan(int ID, double amount, double left, double interest, Date open, int term) {
+	public Loan(long ID, double amount, double left, double interest, Date open, int term) {
 		setLoanID(ID);
 		setLoanedAmount(amount);
 		setAmountLeft(left);
 		setInterest(interest);
 		setOpenDate(open);
 		setTermInYears(term);
+		setTransactions(new ArrayList<Transaction>());
 	}
 	
-	public Loan(double amount) {
+	public Loan(double amount, double interest, int term) {
 		setLoanedAmount(amount);
+		setAmountLeft(amount);
+		setInterest(interest);
+		setTermInYears(term);
 		setOpenDate(new Date());
+		setTransactions(new ArrayList<Transaction>());
 	}
 	
 
-	public int getLoanID() {
+	public long getLoanID() {
 		return loanID;
 	}
 
-	private void setLoanID(int loanID) {
+	public void setLoanID(long loanID) {
 		this.loanID = loanID;
 	}
+	
+	public boolean makePayment(double payment) {
+		if (payment > loanedAmount || payment > amountLeft) {
+			return false;
+		}
+		
+		amountLeft -= payment;
 
+		Transaction trans = new Transaction("Loan Payment", payment);
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE Loans SET remainingBal = ? WHERE loanID = ?");
+			stat.setDouble(1, amountLeft);
+			stat.setLong(2, loanID);
+			stat.execute();
+			stat.close();
+			
+			stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO Transactions(date, description, amount) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+			stat.setDate(1, new java.sql.Date(trans.getDate().getTime()));
+			stat.setString(2, trans.getDescription());
+			stat.setDouble(3, trans.getAmount());
+			stat.execute();
+			
+			ResultSet rs = stat.getGeneratedKeys();
+			if (rs.next()) {
+			    long id = rs.getLong(1);
+			    trans.setTransactionID(id);
+			    transactions.add(trans);
+			}
+			stat.close();
+			
+			stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO LoanTransactions(transactionID, loanID) VALUES (?,?)");
+			stat.setLong(1, trans.getTransactionID());
+			stat.setLong(2, getLoanID());
+			stat.execute();
+			stat.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	/**
+	 * @param transactions Set the transactions retrieved from database
+	 * @apiNote Private because this should not be changed outside
+	 */
+	private void setTransactions(ArrayList<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+
+	/**
+	 * @return Retrieve all transactions
+	 */
+	public ArrayList<Transaction> getTransactions() {
+		return transactions;
+	}
+	
+	/**
+	 * Add a transaction to the account
+	 * @param transaction Transaction object
+	 */
+	public void addTransaction(Transaction transaction) {
+		getTransactions().add(transaction);
+	}
+	
 	/**
 	 * @return The amount loaned
 	 */
@@ -125,9 +203,6 @@ public class Loan {
 		this.termInYears = termInYears;
 		return true;
 	}
-	
-	public boolean makePayment(double amount) {
-		return false;
-	}
+
 
 }

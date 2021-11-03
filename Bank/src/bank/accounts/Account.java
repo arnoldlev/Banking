@@ -5,29 +5,29 @@ import java.util.Date;
 
 public abstract class Account {
 	
-	private int accountID;
+	private long accountID;
 	private double balance;
 	private Date openDate;
-	private ArrayList<Transaction> statements;
+	private ArrayList<Transaction> transactions;
 	
-	public Account(long ID, double bal, Date open, ArrayList<Transaction> stats) {
-		setAccountID(accountID);
+	public Account(long ID, double bal, Date open) {
+		setAccountID(ID);
 		setBalance(bal);
 		setOpenDate(open);
-		setStatements(stats);
+		setTransactions(new ArrayList<Transaction>());
 	}
 	
 	public Account() {
 		setOpenDate(new Date());
-		setStatements(new ArrayList<Transaction>());
+		setTransactions(new ArrayList<Transaction>());
 	}
 
-	public int getAccountID() {
+	public long getAccountID() {
 		return accountID;
 	}
 
-	private void setAccountID(int accountID) {
-		this.accountID = accountID; //TODO: Set this after inserting data into database tables
+	public void setAccountID(long accountID) {
+		this.accountID = accountID; // Set this after inserting data into database tables
 	}
 
 	/**
@@ -61,29 +61,28 @@ public abstract class Account {
 	}
 	
 	/**
-	 * @return Retrieve all statements
+	 * @return Retrieve all transactions
 	 */
-	public ArrayList<Transaction> getStatements() {
-		return statements;
+	public ArrayList<Transaction> getTransactions() {
+		return transactions;
 	}
 
 	/**
-	 * @param statements Set the statements retrieved from database
+	 * @param transactions Set the transactions retrieved from database
 	 * @apiNote Private because this should not be changed outside
 	 */
-	private void setStatements(ArrayList<Transaction> statements) {
-		this.statements = statements;
+	private void setTransactions(ArrayList<Transaction> transactions) {
+		this.transactions = transactions;
 	}
 	
 	/**
-	 * Add a statement to the account
-	 * @param statement Statement object
+	 * Add a transaction to the account
+	 * @param transaction Transaction object
 	 */
-	public void addStatement(Transaction statement) {
-		// TODO: Develop creating a statement
+	public void addTransaction(Transaction transaction) {
+		//TODO:
+		getTransactions().add(transaction);
 	}
-	
-	
 
 	public abstract boolean deposit(double amount);
 	public abstract boolean withdraw(double amount);
