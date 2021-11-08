@@ -1,12 +1,8 @@
 package bank.accounts;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
-
-import bank.main.DatabaseManager;
 
 public class CDAccount extends Account {
 	
@@ -135,7 +131,7 @@ public class CDAccount extends Account {
 		acc.setBalance(acc.getBalance() + amount);
 		Transaction t = new Transaction("CD Transfer -> Account #" + acc.getAccountID(), amount);
 		insertTransaction(t);
-		updateBalance(getBalance());
+		updateBalance(getBalance()); 
 		acc.updateBalance(acc.getBalance());
 		return true;
 	}
