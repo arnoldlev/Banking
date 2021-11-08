@@ -97,7 +97,7 @@ public class CheckingAccount extends Account {
 		Transaction t = new Transaction("Checking Transfer -> Account #" + acc.getAccountID(), amount);
 		insertTransaction(t);
 		updateBalance(getBalance());
-		acc.updateBalance(acc.getBalance());
+		acc.updateBalance(acc.getBalance()); 
 		return true;
 	}
 
