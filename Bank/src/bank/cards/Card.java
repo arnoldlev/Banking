@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
-
 import bank.accounts.Transaction;
 
 public abstract class Card {
@@ -23,6 +22,7 @@ public abstract class Card {
 	}
 	
 	public Card() {
+
 		//Generates Valid CC or Debit Card Number
 		//Uses Luhn's Algorithm to check for validity
 		//Restarts the process if number is invalid
@@ -74,6 +74,7 @@ public abstract class Card {
         localCalendar.setTime(date); //Set localCalendar to current date
         localCalendar.add(Calendar.YEAR, 5); //Add five years for expiration
         expireDate = localCalendar.getTime(); //Add the new time to expire date
+
 	}
 	
 	/**
