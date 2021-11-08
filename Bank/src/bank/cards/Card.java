@@ -2,6 +2,8 @@ package bank.cards;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+import java.util.Calendar;
 
 import bank.accounts.Transaction;
 
@@ -21,6 +23,61 @@ public abstract class Card {
 	
 	public Card() {
 		//TODO: Generate card
+		
+		//Generates Valid CC or Debit Card Number
+		//Uses Luhn's Algorithm to check for validity
+		//Restarts the process if number is invalid
+		Random rand = new Random();
+		final int numOfDigits = 16;
+		String cNumber = "";
+		boolean isValid = false;
+		int nSum = 0;
+		
+		while(!isValid)
+		{
+			for(int i = 0; i < numOfDigits; i++)
+			{
+				int digit = rand.nextInt(9) + 1;
+				cNumber = cNumber + (digit);
+				
+				if(i % 2 == 0)
+				{
+					digit *= 2;
+				}
+				
+				nSum += digit / 10;
+				nSum += digit % 10;
+				
+			}
+			
+			if (nSum % 10 == 0)
+				isValid = true;
+			else
+			{
+				nSum = 0
+				cNumber = "";
+			}
+		}
+		
+		cardNumber = cNumber;
+		
+		//Generating the CSV number
+		int csvNum = 0;
+		for(int i = 0; i < 3; i++)
+		{
+			cvsNum *= 10;
+			csvNum += rand.nextInt(9) + 1;
+		}
+		
+		csv = csvNum;
+		
+		//Generating exp. date
+		Calendar localCalendar = Calendar.getInstance(TimeZone.getDefault());
+        	Date date = new Date(); //Current Date
+        	localCalendar.setTime(date); //Set localCalendar to current date
+        	localCalendar.add(Calendar.YEAR, 5); //Add five years for expiration
+
+        	expireDate = localCalendar.getTime(); //Add the new time to expire date
 	}
 	
 	/**
