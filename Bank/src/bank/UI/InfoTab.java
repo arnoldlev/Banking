@@ -1,14 +1,18 @@
 package bank.UI;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import bank.customer.Customer;
+import bank.main.Main;
 
 public class InfoTab extends JPanel {
 	
@@ -49,6 +53,13 @@ public class InfoTab extends JPanel {
 
 		logout.setText("Logout");
 		add(logout);
+		logout.addActionListener(e -> {
+			customer.logout();
+			JPanel frame = (JPanel) getParent().getParent().getParent();
+			CardLayout card = (CardLayout) frame.getLayout();
+			
+			card.show(Main.login.getParent(), "Login");
+		});
 		logout.setBounds(145, 145, 105, 45);
 		
 	}

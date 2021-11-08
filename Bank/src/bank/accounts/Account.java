@@ -1,7 +1,13 @@
 package bank.accounts;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+
+import bank.main.DatabaseManager;
 
 public abstract class Account {
 	
@@ -27,7 +33,7 @@ public abstract class Account {
 	}
 
 	public void setAccountID(long accountID) {
-		this.accountID = accountID; // Set this after inserting data into database tables
+		this.accountID = accountID; 
 	}
 
 	/**
@@ -76,12 +82,49 @@ public abstract class Account {
 	}
 	
 	/**
-	 * Add a transaction to the account
+	 * Add a transaction to the account AND SQL Database
+	 * @apiNote Do not use this to insert data retrieved from database
 	 * @param transaction Transaction object
 	 */
-	public void addTransaction(Transaction transaction) {
-		//TODO:
-		getTransactions().add(transaction);
+	public void insertTransaction(Transaction trans) {
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO Transactions(date, description, amount) VALUES (?,?,?)", 
+					Statement.RETURN_GENERATED_KEYS);
+			stat.setDate(1, new java.sql.Date(trans.getDate().getTime()));
+			stat.setString(2, trans.getDescription());
+			stat.setDouble(3, trans.getAmount());
+			stat.execute();
+			
+			ResultSet rs = stat.getGeneratedKeys();
+			if (rs.next()) {
+			    long id = rs.getLong(1);
+			    trans.setTransactionID(id);
+			}
+			
+			stat.close();
+			
+			stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO AccountTransactions(transactionID, accountNumber) VALUES (?,?)");
+			stat.setLong(1, trans.getTransactionID());
+			stat.setLong(2, getAccountID());
+			stat.execute();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		getTransactions().add(trans);
+	}
+	
+	
+	public void updateBalance(double amount) {
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareCall("UPDATE Accounts SET balance = ? WHERE accountNumber = ?");
+			stat.setDouble(1, amount);
+			stat.setLong(2, getAccountID());
+			stat.execute();
+			stat.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public abstract boolean deposit(double amount);

@@ -2,8 +2,6 @@ package bank.cards;
 
 import java.util.Date;
 
-import bank.accounts.Transaction;
-
 public class CreditCard extends Card {
 	
 	private double interest;
@@ -80,6 +78,11 @@ public class CreditCard extends Card {
 		return true;
 	}
 	
+	/**
+	 * Submits a payment 
+	 * @param payment The amount being paid off
+	 * @return
+	 */
 	public boolean makePayment(double payment) {
 		//TODO:
 		return false;

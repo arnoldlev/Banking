@@ -166,7 +166,7 @@ public class CardDialogs {
 		return credit.getCreditCard();
 	}
 	
-	public static Transaction addTransaction(JFrame parent, Card card) {
+	public static void addTransaction(JFrame parent, Card card) {
 		JDialog dialog = new JDialog(parent, "", true);
 		dialog.setSize(400, 330);
 		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -215,6 +215,7 @@ public class CardDialogs {
 					JOptionPane.showMessageDialog(parent, "A problem occured when making payment", "Error", JOptionPane.ERROR_MESSAGE);
 					break;
 			}
+			dialog.setVisible(false);
 		});
 		create.setBounds(30, 125, 150, 25);
 
@@ -230,8 +231,6 @@ public class CardDialogs {
 		info.setBounds(10, 80, 350, info.getPreferredSize().height);
 		
 		dialog.setVisible(true);
-		
-		return null;
 	}
 	
 	public static void makePayment(JFrame parent, Card card) {

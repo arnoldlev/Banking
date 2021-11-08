@@ -170,18 +170,87 @@ public class AccountTab extends JPanel {
 		//---- Make a Deposit ----
 		deposit.setText("Deposit");
 		add(deposit);
+		deposit.addActionListener(e -> {
+			JFrame frame = (JFrame) SwingUtilities.getRoot(this);
+			if (accs.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(frame, "Please select a Account first", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			long ID = (long) tableModel.getValueAt(accs.getSelectedRow(), 0);
+			Account account = customer.getAccount(ID);
+			Double amount = AccountDialogs.deposit(frame, account);
+			if (amount != null) {
+				boolean result = account.deposit(amount);
+				if (result) {
+					JOptionPane.showMessageDialog(frame, "Successfully deposited $" + amount + "!", "Success", JOptionPane.PLAIN_MESSAGE);
+					tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+				}
+				else
+					JOptionPane.showMessageDialog(frame, "Error: Unable to deposit", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		deposit.setBounds(235, 220, 190, 23);
 		
 		//--- Make a withdrawal ----
 		withdraw.setText("Withdraw");
 		add(withdraw);
+		withdraw.addActionListener(e -> {
+			JFrame frame = (JFrame) SwingUtilities.getRoot(this);
+			if (accs.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(frame, "Please select a Account first", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			long ID = (long) tableModel.getValueAt(accs.getSelectedRow(), 0);
+			Account account = customer.getAccount(ID);
+			Double amount = AccountDialogs.withdraw(frame, account);
+			if (amount != null) {
+				boolean result = account.withdraw(amount);
+				if (result) {
+					JOptionPane.showMessageDialog(frame, "Successfully withdrew $" + amount + "!", "Success", JOptionPane.PLAIN_MESSAGE);
+					tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+				}
+				else
+					JOptionPane.showMessageDialog(frame, "Error: Unable to withdraw", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		withdraw.setBounds(235, 270, 190, 23);
 		
 		//--- Transfer money to another account ---
 		transfer.setText("Transfer");
 		add(transfer);
+		transfer.addActionListener(e -> {
+			JFrame frame = (JFrame) SwingUtilities.getRoot(this);
+			if (accs.getSelectedRow() == -1) {
+				JOptionPane.showMessageDialog(frame, "Please select a Account first", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			long ID = (long) tableModel.getValueAt(accs.getSelectedRow(), 0);
+			Account account = customer.getAccount(ID);
+			Object[] info = AccountDialogs.transfer(frame, account, customer);
+			if (info[0] != null) {
+				Account to = (Account) info[0];
+				double amount = (double) info[1];
+				boolean result = account.transfer(to, amount);
+				if (result) {
+					JOptionPane.showMessageDialog(frame, "Successfully transferred $" + amount + "!", "Transfer", JOptionPane.PLAIN_MESSAGE);
+					tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+					updateTransferRow(to, tableModel);
+				}
+				else
+					JOptionPane.showMessageDialog(frame, "Error: Unable to transfer", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		transfer.setBounds(15, 270, 190, 23);
 		
+	}
+	
+	private void updateTransferRow(Account to, DefaultTableModel model) {
+		for (int i = 0; i < model.getRowCount(); i++) {
+			if ((long) model.getValueAt(i, 0) == to.getAccountID()) {
+				model.setValueAt("$" + to.getBalance(), i, 2);
+				return;
+			}
+		}
 	}
 
 }

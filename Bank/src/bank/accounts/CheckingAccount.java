@@ -13,7 +13,6 @@ public class CheckingAccount extends Account {
 
 	public CheckingAccount() {
 		super();
-		//TODO: generate debit card
 	}
 	
 	public CheckingAccount(long ID, double bal, Date open,  double charge, DebitCard card) {
@@ -59,20 +58,47 @@ public class CheckingAccount extends Account {
 
 	@Override
 	public boolean deposit(double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount <= 0) {
+			return false;
+		}
+		setBalance(getBalance() + amount);
+		Transaction t = new Transaction("Checking Deposit", amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
 	}
 
 	@Override
 	public boolean withdraw(double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount <= 0) {
+			return false;
+		}
+		if (getBalance() - amount < 0) {
+			return false;
+		}
+		
+		setBalance(getBalance() - amount);
+		Transaction t = new Transaction("Checking Withdrawal", amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
 	}
 
 	@Override
 	public boolean transfer(Account acc, double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount <= 0) {
+			return false;
+		}
+		if (getBalance() - amount < 0) {
+			return false;
+		}
+		setBalance(getBalance() - amount);
+		acc.setBalance(acc.getBalance() + amount);
+		Transaction t = new Transaction("Checking Transfer -> Account #" + acc.getAccountID(), amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		acc.updateBalance(acc.getBalance());
+		return true;
 	}
 
 }

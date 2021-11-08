@@ -71,6 +71,12 @@ public class Customer {
     	loans.forEach(e -> loadTransactions(e));
 	}
 	
+	public void logout() {
+		accounts.clear();
+		cards.clear();
+		loans.clear();
+	} 
+	
 	private void loadTransactions(Account acc) {
 		try {
     		Connection con = DatabaseManager.getConnection();
@@ -80,7 +86,7 @@ public class Customer {
     		while (rs.next()) {
     			//int statID, Date date, String desc, double amount
     			Transaction trans = new Transaction(rs.getLong("transactionID"), rs.getDate("date"), rs.getString("description"), rs.getDouble("amount"));
-    			acc.addTransaction(trans);
+    			acc.getTransactions().add(trans);
     		}
     		rs.close();
     		stat.close();
@@ -258,30 +264,22 @@ public class Customer {
 		return fullAddress;
 	}
 	
-	/**
-	 * @param address Full Address of student, including zipcode
-	 * @return True if address is valid
-	 */
-	public boolean setFullAddress(String add) {
+
+	public void setFullAddress(String add) {
 		this.fullAddress = add;
-		return true; //TODO: Validate address
 	}
 
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	/**
-	 * @param phoneNumber Phone number in ###-###-#### format
-	 * @return True if phone number is valid
-	 */
-	public boolean setPhoneNumber(String phoneNumber) {
+
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-		return true; //TODO: Validate phone number
 	}
 
 	/**
-	 * @return Get all accounts
+	 * @return All associated accounts of the Customer
 	 */
 	public ArrayList<Account> getAccounts() {
 		return accounts;
@@ -309,7 +307,7 @@ public class Customer {
 	}
 
 	/**
-	 * @return Get all debit and credit cards
+	 * @return All (Debit & Credit) cards associated with Customer
 	 */
 	public ArrayList<Card> getCards() {
 		return cards;
@@ -337,7 +335,7 @@ public class Customer {
 	}
 
 	/**
-	 * @return Get all loans
+	 * @return Get all loans associated with Customer
 	 */
 	public ArrayList<Loan> getLoans() {
 		return loans;
@@ -366,7 +364,7 @@ public class Customer {
 	/**
 	 * Open an account for a student
 	 * @param acc Account thats to be added
-	 * @return True if creation went successful
+	 * @return True if creation went successful, false if SQL Exception
 	 */
 	public boolean addAccount(Account acc) {
 		//TODO: Creation of account
@@ -374,9 +372,9 @@ public class Customer {
 	}
 	
 	/**
-	 * Open a credit card
-	 * @param card Card thats to be added
-	 * @return True if creation went successful
+	 * Assign a credit-card to a Customer
+	 * @param card Card to be added to Customers profile
+	 * @return True if creation went successful, false if SQL Exception
 	 */
 	public boolean addCreditCard(CreditCard card) {
 		
@@ -385,9 +383,19 @@ public class Customer {
 	}
 	
 	/**
-	 * Take out a student or personal loan
+	 * To delete a credit card from a Customer
+	 * @param card Card to be deleted
+	 * @return True if creation went successful, false if SQL Exception
+	 */
+	public boolean deleteCreditCard(CreditCard card) {
+		
+		return false;
+	}
+	
+	/**
+	 * Take out a loan
 	 * @param loan Loan thats to be added
-	 * @return True if creation went successful!
+	 * @return True if creation went successful, false if SQL Exception
 	 */
 	public boolean addLoan(Loan loan) {
 		if (loan == null) {

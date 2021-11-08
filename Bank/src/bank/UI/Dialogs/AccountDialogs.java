@@ -1,6 +1,7 @@
 package bank.UI.Dialogs;
 
 import java.awt.Color;
+
 import java.awt.Font;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ import bank.accounts.CDAccount;
 import bank.accounts.CheckingAccount;
 import bank.accounts.SavingsAccount;
 import bank.cards.DebitCard;
+import bank.customer.Customer;
 
 public class AccountDialogs {
 	
@@ -25,16 +27,99 @@ public class AccountDialogs {
 		account = acc;
 	}
 	
-	public static void deposit(JFrame parent, Account acc) {
-		//TODO: 
+	public static Double deposit(JFrame parent, Account acc) {
+		String val = JOptionPane.showInputDialog(parent, "Enter the amount to deposit: ", "Deposit", JOptionPane.OK_CANCEL_OPTION);
+		try {
+			Double amount = Double.parseDouble(val);
+			return amount;
+		} catch (NumberFormatException | NullPointerException e) {
+			JOptionPane.showMessageDialog(parent, "Error: You must enter a numeric input", "Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
 	}
 	
-	public static void withdraw(JFrame parent, Account acc) {
-		//TODO: 
+	public static Double withdraw(JFrame parent, Account acc) {
+		String val = JOptionPane.showInputDialog(parent, "Enter the amount to withdraw: ", "Withdrawal", JOptionPane.OK_CANCEL_OPTION);
+		try {
+			Double amount = Double.parseDouble(val);
+			return amount;
+		} catch (NumberFormatException | NullPointerException e) {
+			JOptionPane.showMessageDialog(parent, "Error: You must enter a numeric input", "Error", JOptionPane.ERROR_MESSAGE);
+			return null;
+		}
 	}
 	
-	public static void transfer(JFrame parent, Account acc, Account to) {
-		//TODO: 
+	public static Object[] transfer(JFrame parent, Account acc, Customer c) {
+		JDialog dialog = new JDialog(parent, "", true);
+		dialog.setSize(400, 330);
+		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		dialog.setLocationRelativeTo(parent);
+		dialog.setLayout(null);
+		dialog.setTitle("Transfer Money");
+		
+		JLabel amText = new JLabel();
+		JLabel toText = new JLabel();
+		JSpinner amount = new JSpinner();
+		JButton transfer = new JButton();
+		JButton cancel = new JButton();
+		JComboBox<String> toList = new JComboBox<String>();
+		c.getAccounts().forEach(e -> {
+			if (e.getAccountID() != acc.getAccountID())
+				toList.addItem("Account #" + e.getAccountID());
+		});
+		
+		Object[] s = {null, null};
+		
+		//---- Amount to Transfer (Text) ----
+		amText.setText("Enter the amount:");
+		amText.setFont(new Font("Tahoma", Font.BOLD, 12));
+		dialog.add(amText);
+		amText.setBounds(10, 15, 120, 25);
+
+		//---- Transfer To (Text)  ----
+		toText.setText("Transfer to:");
+		toText.setFont(new Font("Tahoma", Font.BOLD, 12));
+		dialog.add(toText);
+		toText.setBounds(10, 55, 120, 15);
+		
+		//---- Amount to Transfer (Spinner) ----
+		SpinnerNumberModel model;
+		if (acc instanceof CheckingAccount) {
+			CheckingAccount check = (CheckingAccount) acc;
+			model = new SpinnerNumberModel(1.0, 1.0, check.getCard().getMaxTransaction(), 1.0); // Checking Accounts transactions are linked to their DebitCards
+		} else {
+			model = new SpinnerNumberModel(1.0, 1.0, acc.getBalance(), 1.0);
+		}
+		amount.setModel(model);
+		dialog.add(amount);
+		amount.setBounds(130, 20, 90, 20);
+		
+		//---- Accounts (ComboBox) ----
+		dialog.add(toList);
+		toList.setBounds(130, 55, 96, 20);
+
+		//---- Button to Transfer ----
+		transfer.setText("Transfer Money");
+		dialog.add(transfer);
+		transfer.addActionListener(e -> {
+			String ID = (String) toList.getSelectedItem();
+			long idValue = Long.parseLong(ID.substring(ID.indexOf("#") + 1));
+			Account to = c.getAccount(idValue);
+			s[0] = to;
+			s[1] = (double) amount.getValue();
+			dialog.setVisible(false);
+		});
+		transfer.setBounds(25, 100, 160, 25);
+
+		//---- Cancel ----
+		cancel.setText("Cancel");
+		dialog.add(cancel);
+		cancel.addActionListener(e -> {
+			dialog.setVisible(false);
+		});
+		cancel.setBounds(215, 100, 135, 25);
+		dialog.setVisible(true);
+		return s;
 	}
 	
 	public static SavingsAccount createSavingsAccount(JFrame parent) {
@@ -43,7 +128,7 @@ public class AccountDialogs {
 		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dialog.setLocationRelativeTo(parent);
 		dialog.setLayout(null);
-		dialog.setTitle("Crate a new Savings Account");
+		dialog.setTitle("Create a new Savings Account");
 		
 		AccountDialogs acc = new AccountDialogs();
 		Double[] interest = { 0.5, 1.0, 2.0 };
@@ -190,6 +275,7 @@ public class AccountDialogs {
 			cd.setInterest((double) interests.getSelectedItem());
 			cd.setMinDeposit((double) minDeposit.getValue());
 			cd.setTermInYears((int) term.getValue());
+			
 			acc.setAccount(cd);
 			dialog.setVisible(false);
 		});

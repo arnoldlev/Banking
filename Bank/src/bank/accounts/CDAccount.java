@@ -1,6 +1,12 @@
 package bank.accounts;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
+
+import bank.main.DatabaseManager;
 
 public class CDAccount extends Account {
 	
@@ -84,20 +90,68 @@ public class CDAccount extends Account {
 
 	@Override
 	public boolean deposit(double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount < minDeposit) {
+			return false;
+		}
+		setBalance(getBalance() + amount);
+		Transaction t = new Transaction("CD Deposit", amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
 	}
 
 	@Override
 	public boolean withdraw(double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount < 0) {
+			return false;
+		}
+		if (!canWithdraw()) {
+			return false;
+		}
+		if (getBalance() - amount < 0) {
+			return false;
+		}
+		
+		setBalance(getBalance() - amount);
+		Transaction t = new Transaction("CD Withdrawal", amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
 	}
 
 	@Override
 	public boolean transfer(Account acc, double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount < 0) {
+			return false;
+		}
+		if (!canWithdraw()) {
+			return false;
+		}
+		if (getBalance() - amount < 0) {
+			return false;
+		}
+		
+		setBalance(getBalance() - amount);
+		acc.setBalance(acc.getBalance() + amount);
+		Transaction t = new Transaction("CD Transfer -> Account #" + acc.getAccountID(), amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		acc.updateBalance(acc.getBalance());
+		return true;
+	}
+	
+	private boolean canWithdraw() {
+		Calendar mature = Calendar.getInstance(TimeZone.getDefault());
+		mature.setTime(getOpenDate());
+		mature.add(Calendar.YEAR, termInYears);
+		
+		Calendar today = Calendar.getInstance();
+		today.setTime(new Date());
+		
+		if (today.compareTo(mature) <= 0) {
+			return false;
+		}
+		return true;
 	}
 
 }

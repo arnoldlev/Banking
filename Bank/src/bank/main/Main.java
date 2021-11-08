@@ -12,6 +12,8 @@ import bank.UI.LoginScreen;
 
 public class Main {
 	
+	public static JPanel login;
+	
 	private static void init() {
 	
 		// Open DB Connection
@@ -28,7 +30,7 @@ public class Main {
 		main.setLayout(card);
 		
 		// Initialize the first screen
-		JPanel login = new LoginScreen();
+		login = new LoginScreen();
 		main.add(login, "Login");
 
 		// Add main panel to main frame and show

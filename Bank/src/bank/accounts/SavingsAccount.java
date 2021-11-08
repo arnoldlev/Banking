@@ -38,20 +38,47 @@ public class SavingsAccount extends Account {
 
 	@Override
 	public boolean deposit(double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount <= 0) {
+			return false;
+		}
+		setBalance(getBalance() + amount);
+		Transaction t = new Transaction("Savings Deposit", amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
 	}
 
 	@Override
 	public boolean withdraw(double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount <= 0) {
+			return false;
+		}
+		if (getBalance() - amount < 0) {
+			return false;
+		}
+		
+		setBalance(getBalance() - amount);
+		Transaction t = new Transaction("Savings Withdrawal", amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
 	}
 
 	@Override
 	public boolean transfer(Account acc, double amount) {
-		// TODO Auto-generated method stub
-		return false;
+		if (amount <= 0) {
+			return false;
+		}
+		if (getBalance() - amount < 0) {
+			return false;
+		}
+		setBalance(getBalance() - amount);
+		acc.setBalance(acc.getBalance() + amount);
+		Transaction t = new Transaction("Savings Transfer -> Account #" + acc.getAccountID(), amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		acc.updateBalance(acc.getBalance());
+		return true;
 	}
 
 }
