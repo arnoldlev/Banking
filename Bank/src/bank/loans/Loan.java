@@ -73,7 +73,7 @@ public class Loan {
 			if (rs.next()) {
 			    long id = rs.getLong(1);
 			    trans.setTransactionID(id);
-			    transactions.add(trans);
+			    addTransaction(trans);
 			}
 			stat.close();
 			

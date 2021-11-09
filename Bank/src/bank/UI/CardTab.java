@@ -99,7 +99,7 @@ public class CardTab extends JPanel {
 		
 		
 
-		//---- Delete a CREDITCARD [To delete DebitCard, user has to delete CheckingAccount] ----
+		//---- Delete a CREDITCARD [Cannot delete DebitCard] ----
 		deleteCard.setText("Delete Card");
 		add(deleteCard);
 		deleteCard.addActionListener(e -> {

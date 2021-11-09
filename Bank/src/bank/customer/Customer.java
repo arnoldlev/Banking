@@ -1,6 +1,7 @@
 package bank.customer;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -367,8 +368,66 @@ public class Customer {
 	 * @return True if creation went successful, false if SQL Exception
 	 */
 	public boolean addAccount(Account acc) {
-		//TODO: Creation of account
-		return false;
+		if (acc == null) {
+			return false;
+		}
+		getAccounts().add(acc);
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO Accounts (accountNumber, balance, openDate, broncoID) VALUES (?,?,?,?)");
+			stat.setLong(1, acc.getAccountID());
+			stat.setDouble(2, acc.getBalance());
+			stat.setDate(3, new java.sql.Date(acc.getOpenDate().getTime()));
+			stat.setLong(4, getBroncoID());
+			stat.execute();
+			
+			stat.close();
+			
+			if (acc instanceof CDAccount) {
+				CDAccount cd = (CDAccount) acc;
+				stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO CDAccount (accountNumber, termInYears, interest, minDeposit) VALUES (?,?,?,?)");
+				stat.setLong(1, acc.getAccountID());
+				stat.setInt(2, cd.getTermInYears());
+				stat.setDouble(3, cd.getInterest());
+				stat.setDouble(4, cd.getMinDeposit());
+				stat.execute();	
+			} else if (acc instanceof SavingsAccount) {
+				SavingsAccount save = (SavingsAccount) acc;
+				stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO SavingsAccount (accountNumber, interest) VALUES (?,?)");
+				stat.setLong(1, acc.getAccountID());
+				stat.setDouble(2, save.getInterest());
+				stat.execute();
+			} else {
+				CheckingAccount check = (CheckingAccount) acc;
+				getCards().add(check.getCard());
+				
+				stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO Cards (cardNumber, expireDate, csv, broncoID) VALUES (?,?,?,?)");
+				stat.setString(1, check.getCard().getCardNumber());
+				stat.setDate(2, new java.sql.Date(check.getCard().getExpireDate().getTime()));
+				stat.setInt(3, check.getCard().getCsv());
+				stat.setLong(4, getBroncoID());
+				stat.execute();
+				stat.close();
+				
+				stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO DebitCards (cardNumber, maxTransaction, atmLimit) VALUES (?,?,?)");
+				stat.setString(1, check.getCard().getCardNumber());
+				stat.setDouble(2, check.getCard().getMaxTransaction());
+				stat.setDouble(3, check.getCard().getAtmLimit());
+				stat.execute();
+				stat.close();
+				
+				stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO CheckingAccount (accountNumber, monthlyCharge, cardNumber) VALUES (?,?,?)");
+				stat.setLong(1, acc.getAccountID());
+				stat.setDouble(2, check.getMonthlyCharge());
+				stat.setString(3, check.getCard().getCardNumber());
+				stat.execute();	
+			}
+			
+			stat.close();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	/**
@@ -418,7 +477,6 @@ public class Customer {
 			    long id = rs.getLong(1);
 			    loan.setLoanID(id);
 			    getLoans().add(loan);
-			    System.out.println(id);
 			}
 			
 			stat.close();

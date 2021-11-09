@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import bank.main.DatabaseManager;
 
@@ -24,6 +25,9 @@ public abstract class Account {
 	}
 	
 	public Account() {
+		Random rand = new Random();
+		int ID = rand.nextInt(9000000) + 100000;
+		setAccountID(ID);
 		setOpenDate(new Date());
 		setTransactions(new ArrayList<Transaction>());
 	}

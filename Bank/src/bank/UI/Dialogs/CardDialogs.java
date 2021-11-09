@@ -79,7 +79,7 @@ public class CardDialogs {
 	
 	public static void deleteCreditCard(JFrame parent, Card card) {
 		if (card instanceof DebitCard) {
-			JOptionPane.showMessageDialog(null, "You cannot delete DebitCards! Delete the Checking Account instead", "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "You cannot delete DebitCards!", "ERROR", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
