@@ -77,18 +77,14 @@ public class CardDialogs {
 		dialog.setVisible(true);
 	}
 	
-	public static void deleteCreditCard(JFrame parent, Card card) {
+	public static int deleteCreditCard(JFrame parent, Card card) {
 		if (card instanceof DebitCard) {
 			JOptionPane.showMessageDialog(null, "You cannot delete DebitCards!", "ERROR", JOptionPane.ERROR_MESSAGE);
-			return;
+			return 1;
 		}
 		
 		int result = JOptionPane.showConfirmDialog(parent, "Are you sure you want to delete Card Number: " + card.getCardNumber() + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-		switch (result) {
-			case 0:
-				JOptionPane.showMessageDialog(parent, "Card Deleted!", "Deleted", JOptionPane.INFORMATION_MESSAGE);
-				break;
-		}
+		return result;
 	}
 
 	public static CreditCard openCreditCard(JFrame parent) {
@@ -203,7 +199,7 @@ public class CardDialogs {
 		dialog.add(create);
 		create.addActionListener(e -> {
 			Transaction t = new Transaction(info.getText(), (double) transAmount.getValue());
-			int result = card.addTransaction(t);
+			int result = card.insertTransaction(t);
 			switch (result) {
 				case 0:
 					JOptionPane.showMessageDialog(parent, "Successfully added a transaction!", "Success", JOptionPane.PLAIN_MESSAGE);
@@ -238,6 +234,11 @@ public class CardDialogs {
 			JOptionPane.showMessageDialog(null, "Cannot make payment on DebitCards!", "ERROR", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
+		CreditCard credit = (CreditCard) card;
+		if (credit.getMaxBalance() - credit.getAvaliableBalance() < 1) {
+			JOptionPane.showMessageDialog(null, "This CreditCard is currently fully paid!", "ERROR", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		
 		JDialog dialog = new JDialog(parent, "", true);
 		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -245,7 +246,7 @@ public class CardDialogs {
 		dialog.setLayout(null);
 		dialog.setSize(375, 185);
 		
-		CreditCard credit = (CreditCard) card;
+
 		JLabel payText = new JLabel();
 		JSpinner payment = new JSpinner();
 		JLabel balance = new JLabel();
@@ -283,8 +284,10 @@ public class CardDialogs {
 			boolean result = credit.makePayment((double) payment.getValue());
 			if (result) {
 				JOptionPane.showMessageDialog(parent, "Successfully made payment!", "Success", JOptionPane.PLAIN_MESSAGE);
+				dialog.setVisible(false);
 			} else {
 				JOptionPane.showMessageDialog(parent, "A problem occured when making payment", "Error", JOptionPane.ERROR_MESSAGE);
+				dialog.setVisible(false);
 			}
 		});
 		ok.setBounds(50, 95, 120, ok.getPreferredSize().height);

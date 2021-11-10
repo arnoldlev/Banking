@@ -85,9 +85,9 @@ public class CDAccount extends Account {
 
 
 	@Override
-	public boolean deposit(double amount) {
+	public boolean deposit(double amount) throws Exception {
 		if (amount < minDeposit) {
-			return false;
+			throw new Exception("Error: Your deposit must be at least $" + minDeposit);
 		}
 		setBalance(getBalance() + amount);
 		Transaction t = new Transaction("CD Deposit", amount);
@@ -97,12 +97,12 @@ public class CDAccount extends Account {
 	}
 
 	@Override
-	public boolean withdraw(double amount) {
+	public boolean withdraw(double amount) throws Exception {
 		if (amount < 0) {
 			return false;
 		}
 		if (!canWithdraw()) {
-			return false;
+			throw new Exception("Error: Account has not reached maturity date!");
 		}
 		if (getBalance() - amount < 0) {
 			return false;
@@ -116,12 +116,12 @@ public class CDAccount extends Account {
 	}
 
 	@Override
-	public boolean transfer(Account acc, double amount) {
+	public boolean transfer(Account acc, double amount) throws Exception {
 		if (amount < 0) {
 			return false;
 		}
 		if (!canWithdraw()) {
-			return false;
+			throw new Exception("Error: Account has not reached maturity date!");
 		}
 		if (getBalance() - amount < 0) {
 			return false;

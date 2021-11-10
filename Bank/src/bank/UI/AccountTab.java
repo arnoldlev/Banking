@@ -68,7 +68,7 @@ public class AccountTab extends JPanel {
 		accs = new JTable(tableModel);
 		
 		//======== ScrollPane for JTable ========
-		accs.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		accs.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		accs.setDefaultEditor(Object.class, null);
 		JTableHeader header = accs.getTableHeader();
 		header.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
@@ -180,13 +180,16 @@ public class AccountTab extends JPanel {
 			Account account = customer.getAccount(ID);
 			Double amount = AccountDialogs.deposit(frame, account);
 			if (amount != null) {
-				boolean result = account.deposit(amount);
-				if (result) {
-					JOptionPane.showMessageDialog(frame, "Successfully deposited $" + amount + "!", "Success", JOptionPane.PLAIN_MESSAGE);
-					tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+				try {
+					boolean result = account.deposit(amount);
+					if (result) {
+						JOptionPane.showMessageDialog(frame, "Successfully deposited $" + amount + "!", "Success", JOptionPane.PLAIN_MESSAGE);
+						tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+					} else
+						JOptionPane.showMessageDialog(frame, "Error: Unable to deposit", "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(frame, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				else
-					JOptionPane.showMessageDialog(frame, "Error: Unable to deposit", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		deposit.setBounds(235, 220, 190, 23);
@@ -204,13 +207,16 @@ public class AccountTab extends JPanel {
 			Account account = customer.getAccount(ID);
 			Double amount = AccountDialogs.withdraw(frame, account);
 			if (amount != null) {
-				boolean result = account.withdraw(amount);
-				if (result) {
-					JOptionPane.showMessageDialog(frame, "Successfully withdrew $" + amount + "!", "Success", JOptionPane.PLAIN_MESSAGE);
-					tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+				try {
+					boolean result = account.withdraw(amount);
+					if (result) {
+						JOptionPane.showMessageDialog(frame, "Successfully withdrew $" + amount + "!", "Success", JOptionPane.PLAIN_MESSAGE);
+						tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+					} else
+						JOptionPane.showMessageDialog(frame, "Error: Unable to withdraw", "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(frame, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				else
-					JOptionPane.showMessageDialog(frame, "Error: Unable to withdraw", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		withdraw.setBounds(235, 270, 190, 23);
@@ -230,17 +236,21 @@ public class AccountTab extends JPanel {
 			if (info[0] != null) {
 				Account to = (Account) info[0];
 				double amount = (double) info[1];
-				boolean result = account.transfer(to, amount);
-				if (result) {
-					JOptionPane.showMessageDialog(frame, "Successfully transferred $" + amount + "!", "Transfer", JOptionPane.PLAIN_MESSAGE);
-					tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
-					updateTransferRow(to, tableModel);
+				try {
+					boolean result = account.transfer(to, amount);
+					if (result) {
+						JOptionPane.showMessageDialog(frame, "Successfully transferred $" + amount + "!", "Transfer", JOptionPane.PLAIN_MESSAGE);
+						tableModel.setValueAt("$" + account.getBalance(), accs.getSelectedRow(), 2);
+						updateTransferRow(to, tableModel);
+					} else
+						JOptionPane.showMessageDialog(frame, "Error: Unable to transfer", "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (Exception ex) {
+					JOptionPane.showMessageDialog(frame, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
-				else
-					JOptionPane.showMessageDialog(frame, "Error: Unable to transfer", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
 		transfer.setBounds(15, 270, 190, 23);
+		
 		
 	}
 	

@@ -109,7 +109,7 @@ public class Customer {
     		while (rs.next()) {
     			//int statID, Date date, String desc, double amount
     			Transaction trans = new Transaction(rs.getLong("transactionID"), rs.getDate("date"), rs.getString("description"), rs.getDouble("amount"));
-    			((CreditCard) card).addTransaction(trans);
+    			((CreditCard) card).getTransactions().add(trans);
     		}
     		rs.close();
     		stat.close();
@@ -447,8 +447,22 @@ public class Customer {
 	 * @return True if creation went successful, false if SQL Exception
 	 */
 	public boolean deleteCreditCard(CreditCard card) {
+		if (card == null) {
+			return false;
+		}
 		
-		return false;
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("DELETE FROM Cards WHERE cardNumber = ?");
+			stat.setString(1, card.getCardNumber());
+			stat.execute();
+			
+			getCards().remove(card);
+			
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	/**
