@@ -1,7 +1,6 @@
 package bank.customer;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -174,7 +173,7 @@ public class Customer {
     		while (rs.next()) {
     			//String num, int csv, Date expire, double interest, double max, double bal, ArrayList<Transaction> trans
     			CreditCard credit = new CreditCard(rs.getString("cardNumber"), rs.getInt("csv"), rs.getDate("expireDate"), rs.getDouble("interest"), 
-    					rs.getDouble("maxBalance"), rs.getDouble("avaliableBalance"));
+    					rs.getDouble("maxBalance"), rs.getDouble("availableBalance"));
     			cards.add(credit);
     		}
     		

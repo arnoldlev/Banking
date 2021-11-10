@@ -131,14 +131,14 @@ public class CardDialogs {
 			credit.setCreditCard(card);
 			
 			if ((int) creditScore.getValue() <= 500) {
-				card.setAvaliableBalance(300.0);
 				card.setMaxBalance(300.0);
+				card.setAvaliableBalance(300.0);
 			} else if ((int) creditScore.getValue() > 500 && (int) creditScore.getValue() <= 600) {
-				card.setAvaliableBalance(500.0);
 				card.setMaxBalance(500.0);
+				card.setAvaliableBalance(300.0);
 			} else {
-				card.setAvaliableBalance(1000.0);
 				card.setMaxBalance(1000.0);
+				card.setAvaliableBalance(300.0);
 			}
 			
 			dialog.setVisible(false);

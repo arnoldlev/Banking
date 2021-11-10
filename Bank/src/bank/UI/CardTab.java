@@ -149,7 +149,7 @@ public class CardTab extends JPanel {
 			CreditCard card = CardDialogs.openCreditCard(frame);
 			if (card != null) {
 				if (customer.addCreditCard(card)) {
-					JOptionPane.showMessageDialog(frame, "Successfully opened new Credit Card!", "Success", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Successfully opened new Credit Card with limit $" + card.getMaxBalance() + "!", "Success", JOptionPane.PLAIN_MESSAGE);
 					Object[] s = { card.getCardNumber(), "Credit", card.getCsv()};
 					tableModel.addRow(s);
 				} else {
