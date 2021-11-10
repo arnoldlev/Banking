@@ -86,7 +86,7 @@ public abstract class Account {
 	}
 	
 	/**
-	 * Add a transaction to the account AND SQL Database
+	 * Add a transaction to the account and SQL Database
 	 * @apiNote Do not use this to insert data retrieved from database
 	 * @param transaction Transaction object
 	 */
@@ -119,6 +119,11 @@ public abstract class Account {
 	}
 	
 	
+	/**
+	 * Updates the balance in the SQL Database
+	 * @param amount Amount to set
+	 * @apiNote Does not update the current instance attributes!
+	 */
 	public void updateBalance(double amount) {
 		try {
 			PreparedStatement stat = DatabaseManager.getConnection().prepareCall("UPDATE Accounts SET balance = ? WHERE accountNumber = ?");
@@ -131,9 +136,9 @@ public abstract class Account {
 		}
 	}
 
-	public abstract boolean deposit(double amount);
-	public abstract boolean withdraw(double amount);
-	public abstract boolean transfer(Account acc, double amount);
+	public abstract boolean deposit(double amount) throws Exception;
+	public abstract boolean withdraw(double amount) throws Exception;
+	public abstract boolean transfer(Account acc, double amount) throws Exception;
 
 
 }

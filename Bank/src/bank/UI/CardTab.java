@@ -52,7 +52,7 @@ public class CardTab extends JPanel {
 		viewTrans = new JButton();
 		
 		//======== Scroll Pane for JTable ========
-		cards.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		cards.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		cards.setDefaultEditor(Object.class, null);
 		JTableHeader header = cards.getTableHeader();
 		header.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
@@ -110,7 +110,15 @@ public class CardTab extends JPanel {
 			}
 			String num = (String) tableModel.getValueAt(cards.getSelectedRow(), 0);
 			Card c = customer.getCard(num);
-			CardDialogs.deleteCreditCard(frame, c);
+			int r = CardDialogs.deleteCreditCard(frame, c);
+			if (r == 0) {
+				if (customer.deleteCreditCard((CreditCard) c)) {
+					JOptionPane.showMessageDialog(frame, "Card Deleted!", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+					tableModel.removeRow(cards.getSelectedRow());
+				} else {
+					JOptionPane.showMessageDialog(frame, "Problem occured deleting Credit Card", "Failed", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		});
 		deleteCard.setBounds(15, 220, 190, 23);
 		

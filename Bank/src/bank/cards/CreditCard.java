@@ -1,6 +1,11 @@
 package bank.cards;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
+
+import bank.accounts.Transaction;
+import bank.main.DatabaseManager;
 
 public class CreditCard extends Card {
 	
@@ -67,11 +72,11 @@ public class CreditCard extends Card {
 
 	/**
 	 * @param avaliableBalance Available balance left
-	 * @return True if parameter is positive
+	 * @return True if parameter is positive and not greater than maximum balance
 	 * @apiNote This cannot be negative!
 	 */
 	public boolean setAvaliableBalance(double avaliableBalance) {
-		if (avaliableBalance < 0) {
+		if (avaliableBalance < 0 || avaliableBalance > getMaxBalance()) {
 			return false;
 		}
 		this.avaliableBalance = avaliableBalance;
@@ -84,8 +89,24 @@ public class CreditCard extends Card {
 	 * @return
 	 */
 	public boolean makePayment(double payment) {
-		//TODO:
-		return false;
+		if (payment <= 0 || (getAvaliableBalance() + payment) > getMaxBalance()) {
+			return false;
+		}
+		
+		setAvaliableBalance(getAvaliableBalance() + payment); 
+		Transaction t = new Transaction("Card Payment", payment);
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE CreditCards SET avaliableBalance = ? WHERE cardNumber = ?");
+			stat.setDouble(1, getAvaliableBalance());
+			stat.setString(2, getCardNumber());
+			stat.execute();
+			
+			insertTransaction(t);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 

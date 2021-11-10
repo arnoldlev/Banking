@@ -41,7 +41,7 @@ public class LoansTab extends JPanel {
 		viewInfo = new JButton();
 		
 		//======== Scroll Bar for JTable ========
-		loanOpen.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		loanOpen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		loanOpen.setDefaultEditor(Object.class, null);
 		JTableHeader header = loanOpen.getTableHeader();
 		header.setBorder(BorderFactory.createLineBorder(Color.gray, 3));

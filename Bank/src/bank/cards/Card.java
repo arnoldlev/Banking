@@ -97,7 +97,7 @@ public abstract class Card {
 	 * @param transaction Transaction object
 	 * @return 0 if successful, 1 if invalid funds, or 2 for SQLException
 	 */
-	public int addTransaction(Transaction transaction) {
+	public int insertTransaction(Transaction transaction) {
 		//TODO:
 		getTransactions().add(transaction);
 		return 0;

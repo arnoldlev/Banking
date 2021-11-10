@@ -420,6 +420,11 @@ public class AccountDialogs {
 		} else if (acc instanceof SavingsAccount) {
 			SavingsAccount s = (SavingsAccount) acc;
 			t += "<br>Interest Rate: " + s.getInterest() + "%";
+		} else {
+			CDAccount cd = (CDAccount) acc;
+			t += "<br>Term In Years: " + cd.getTermInYears() + "</br>"
+				+ "<br>Interest Rate: " + cd.getInterest() + "%</br>"
+				+ "<br>Minimum Deposit: $" + cd.getMinDeposit() + "</br>";
 		}
 		
 		JOptionPane.showMessageDialog(parent, t, "Account Information", JOptionPane.INFORMATION_MESSAGE);
