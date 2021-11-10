@@ -437,8 +437,33 @@ public class Customer {
 	 */
 	public boolean addCreditCard(CreditCard card) {
 		
-		//TODO: Creation of credit card into db
-		return false;
+		if (card == null)
+		{
+			return false;
+		}
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO Cards (cardNumber,expireDate, csv, broncoID) VALUES (?,?,?,?)");
+			stat.setString(1, card.getCardNumber());
+			stat.setDate(2, new java.sql.Date(card.getExpireDate().getTime()));
+			stat.setInt(3, card.getCsv());
+			stat.setLong(4, getBroncoID());
+			stat.execute();
+			stat.close();
+			
+			stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO CreditCards (cardNumber, interest, maxBalance, availableBalance) VALUES (?,?,?,?)");
+			stat.setString(1, card.getCardNumber());
+			stat.setDouble(2, card.getInterest());
+			stat.setDouble(3, card.getMaxBalance());
+			stat.setDouble(4, card.getAvailableBalance());
+			stat.execute();
+			stat.close();
+			
+			getCards().add(card);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	/**
