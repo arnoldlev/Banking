@@ -108,6 +108,32 @@ public class CreditCard extends Card {
 			return false;
 		}
 	}
-	
 
+	/**
+	 * Adds a Transaction to the Card
+	 * @implNote If card is a CreditCard, it will update the balance.
+	 * @param transaction Transaction object
+	 * @return 0 if successful, 1 if invalid funds, or 2 for SQLException
+	 */
+	public int insertTransaction(Transaction transaction){
+		
+		try{
+			if(getAvaliableBalance() >= transaction.getAmount()){
+				PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE CreditCards SET avaliableBalance = ? WHERE cardNumber = ?");
+				stat.setDouble(1, getAvaliableBalance() - transaction.getAmount());
+				stat.setString(2, getCardNumber());
+				stat.execute();
+				getTransactions().add(transaction);
+				return 0;
+			}
+			else{
+				return 1;
+			}
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			return 2; 
+		}
+
+	}
 }
