@@ -14,6 +14,7 @@ import bank.cards.DebitCard;
 public class CardDialogs {
 	
 	private CreditCard credit;
+	private Transaction transac;
 	private boolean result;
 	
 	public boolean getResult() {
@@ -30,6 +31,14 @@ public class CardDialogs {
 	
 	public void setCreditCard(CreditCard c) {
 		credit = c;
+	}
+	
+	public Transaction getTransac() {
+		return transac;
+	}
+	
+	public void setTransaction(Transaction t) {
+		transac = t;
 	}
 	
 	public static void viewInfo(JFrame frame, Card card) {
@@ -162,12 +171,14 @@ public class CardDialogs {
 		return credit.getCreditCard();
 	}
 	
-	public static void addTransaction(JFrame parent, Card card) {
+	public static Transaction addTransaction(JFrame parent, Card card) {
 		JDialog dialog = new JDialog(parent, "", true);
 		dialog.setSize(400, 330);
 		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dialog.setLocationRelativeTo(parent);
 		dialog.setLayout(null);
+		
+		CardDialogs tran = new CardDialogs();
 		
 		dialog.setTitle("Add Transaction");
 		
@@ -199,18 +210,7 @@ public class CardDialogs {
 		dialog.add(create);
 		create.addActionListener(e -> {
 			Transaction t = new Transaction(info.getText(), (double) transAmount.getValue());
-			int result = card.insertTransaction(t);
-			switch (result) {
-				case 0:
-					JOptionPane.showMessageDialog(parent, "Successfully added a transaction!", "Success", JOptionPane.PLAIN_MESSAGE);
-					break;
-				case 1:
-					JOptionPane.showMessageDialog(parent, "You have invalid funds for this transaction!", "Error", JOptionPane.ERROR_MESSAGE);
-					break;
-				case 2:
-					JOptionPane.showMessageDialog(parent, "A problem occured when making payment", "Error", JOptionPane.ERROR_MESSAGE);
-					break;
-			}
+			tran.setTransaction(t);
 			dialog.setVisible(false);
 		});
 		create.setBounds(30, 125, 150, 25);
@@ -227,6 +227,7 @@ public class CardDialogs {
 		info.setBounds(10, 80, 350, info.getPreferredSize().height);
 		
 		dialog.setVisible(true);
+		return tran.getTransac();
 	}
 	
 	public static void makePayment(JFrame parent, Card card) {

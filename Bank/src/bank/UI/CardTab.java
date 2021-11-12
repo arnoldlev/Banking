@@ -8,8 +8,11 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import bank.UI.Dialogs.CardDialogs;
+import bank.accounts.CheckingAccount;
+import bank.accounts.Transaction;
 import bank.cards.Card;
 import bank.cards.CreditCard;
+import bank.cards.DebitCard;
 import bank.customer.Customer;
 
 public class CardTab extends JPanel {
@@ -135,8 +138,19 @@ public class CardTab extends JPanel {
 			}
 			String num = (String) tableModel.getValueAt(cards.getSelectedRow(), 0);
 			Card c = customer.getCard(num);
-			
-			CardDialogs.addTransaction(frame, c);
+			Transaction t = CardDialogs.addTransaction(frame, c);
+			boolean result;
+			if (c instanceof CreditCard) {
+				result = ((CreditCard) c).addTransaction(t);
+			} else {
+				CheckingAccount acc = customer.getCheckAssociated(c.getCardNumber());
+				result = ((DebitCard) c).addTransaction(acc, t);
+			}
+			if (result) {
+				JOptionPane.showMessageDialog(frame, "Successfully added a transaction!", "Success", JOptionPane.PLAIN_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(frame, "You have invalid funds for this transaction!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		});
 		cardTrans.setBounds(235, 115, 190, 23);
 		

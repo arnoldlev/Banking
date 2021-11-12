@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import bank.accounts.Transaction;
+import bank.customer.Customer;
 import bank.main.DatabaseManager;
 
 public class CreditCard extends Card {
@@ -110,12 +111,11 @@ public class CreditCard extends Card {
 	}
 
 	/**
-	 * Adds a Transaction to the Card
-	 * @implNote If card is a CreditCard, it will update the balance.
+	 * Creates a transaction, adds it to Database and updates balance
 	 * @param transaction Transaction object
-	 * @return 0 if successful, 1 if invalid funds, or 2 for SQLException
+	 * @return true if successful, else false
 	 */
-	public int insertTransaction(Transaction transaction){
+	public boolean addTransaction(Transaction transaction){
 		
 		try{
 			if(getAvaliableBalance() >= transaction.getAmount()){
@@ -124,15 +124,14 @@ public class CreditCard extends Card {
 				stat.setString(2, getCardNumber());
 				stat.execute();
 				getTransactions().add(transaction);
-				return 0;
+				return true;
+			} else {
+				return false;
 			}
-			else{
-				return 1;
-			}
-		}
-		catch(SQLException e){
+			
+		} catch(SQLException e){
 			e.printStackTrace();
-			return 2; 
+			return false; 
 		}
 
 	}

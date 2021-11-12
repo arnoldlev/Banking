@@ -137,7 +137,11 @@ public abstract class Account {
 	}
 
 	public abstract boolean deposit(double amount) throws Exception;
+	public abstract boolean deposit(double amount, String desc) throws Exception;
+	
 	public abstract boolean withdraw(double amount) throws Exception;
+	public abstract boolean withdraw(double amount, String desc) throws Exception;
+	
 	public abstract boolean transfer(Account acc, double amount) throws Exception;
 
 

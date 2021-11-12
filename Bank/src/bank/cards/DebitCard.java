@@ -4,9 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Date;
 
+import bank.accounts.CheckingAccount;
 import bank.accounts.Transaction;
 import bank.main.DatabaseManager;
-import bank.accounts.CheckingAccount;
+
 public class DebitCard extends Card {
 	
 	private double maxTransaction;
@@ -63,29 +64,28 @@ public class DebitCard extends Card {
 	}
 
 	/**
-	 * Adds a Transaction to the Card
-	 * @implNote If card is a DebitCard, it will update the balance of the associated Checking Account
+	 * Creates a transaction, adds it to Database and updates balance
 	 * @param transaction Transaction object
-	 * @return 0 if successful, 1 if invalid funds, or 2 for SQLException
+	 * @return true if successful, else false
 	 */
-	public int insertTransaction(Transaction transaction){
+	public boolean addTransaction(CheckingAccount acc, Transaction transaction){
 		//DummyCode Below
 		try{
 			if(getAtmLimit() >= transaction.getAmount()){
-				PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE DebitCards SET avaliableBalance = ? WHERE cardNumber = ?");
+				PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE DebitCards SET avaliableBalance = ? WHERE cardNumber = ?"); // No such column
 				stat.setDouble(1, getAtmLimit() - transaction.getAmount());
 				stat.setString(2, getCardNumber());
 				stat.execute();
 				getTransactions().add(transaction);
-				return 0;
+				return true;
 			}
 			else{
-				return 1;
+				return false;
 			}
 		}
 		catch(SQLException e){
 			e.printStackTrace();
-			return 2; 
+			return false; 
 		}
 
 	}

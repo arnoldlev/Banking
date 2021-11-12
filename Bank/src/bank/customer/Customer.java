@@ -333,6 +333,21 @@ public class Customer {
 		}
 		return null;
 	}
+	
+	/**
+	 * 
+	 * @param num DebitCard Number
+	 * @return CheckingAccount associated with the DebitCard. If no such exists, returns null
+	 */
+	public CheckingAccount getCheckAssociated(String num) {
+		for (Account e : getAccounts()) {
+			if (e instanceof CheckingAccount) {
+				if (((CheckingAccount) e).getCard().getCardNumber().equalsIgnoreCase(num));
+				return (CheckingAccount) e;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * @return Get all loans associated with Customer
@@ -453,7 +468,7 @@ public class Customer {
 			stat.setString(1, card.getCardNumber());
 			stat.setDouble(2, card.getInterest());
 			stat.setDouble(3, card.getMaxBalance());
-			stat.setDouble(4, card.getAvailableBalance());
+			stat.setDouble(4, card.getAvaliableBalance());
 			stat.execute();
 			stat.close();
 			

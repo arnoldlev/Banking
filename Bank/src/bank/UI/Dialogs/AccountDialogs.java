@@ -7,6 +7,7 @@ import java.awt.Font;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
 
 import bank.accounts.Account;
 import bank.accounts.CDAccount;
@@ -393,10 +394,27 @@ public class AccountDialogs {
 		
 		String[] cols = { "ID", "Date", "Description", "Amount" };
 
+
 		DefaultTableModel tableModel = new DefaultTableModel(cols, 0);
 		acc.getTransactions().forEach(e -> tableModel.addRow(e.toData()));
 		JTable transacs = new JTable(tableModel);
 		
+        TableColumn column = transacs.getColumnModel().getColumn(0);
+        column.setMinWidth(25);
+        column.setMaxWidth(25);
+        column.setPreferredWidth(25);
+        
+        column = transacs.getColumnModel().getColumn(1);
+        column.setMinWidth(100);
+        column.setMaxWidth(100);
+        column.setPreferredWidth(100);
+        
+        column = transacs.getColumnModel().getColumn(3);
+        column.setMinWidth(60);
+        column.setMaxWidth(60);
+        column.setPreferredWidth(60);
+		
+
 		JTableHeader header = transacs.getTableHeader();
 		header.setBorder(BorderFactory.createLineBorder(Color.gray, 3));
 		header.setFont(new Font("Courier New", Font.BOLD, 14));

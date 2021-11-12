@@ -35,6 +35,18 @@ public class SavingsAccount extends Account {
 		return true;
 	}
 	
+	@Override
+	public boolean deposit(double amount, String desc) {
+		if (amount <= 0) {
+			return false;
+		}
+		setBalance(getBalance() + amount);
+		Transaction t = new Transaction(desc, amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
+	}
+	
 
 	@Override
 	public boolean deposit(double amount) {
@@ -43,6 +55,22 @@ public class SavingsAccount extends Account {
 		}
 		setBalance(getBalance() + amount);
 		Transaction t = new Transaction("Savings Deposit", amount);
+		insertTransaction(t);
+		updateBalance(getBalance());
+		return true;
+	}
+	
+	@Override
+	public boolean withdraw(double amount, String desc) {
+		if (amount <= 0) {
+			return false;
+		}
+		if (getBalance() - amount < 0) {
+			return false;
+		}
+		
+		setBalance(getBalance() - amount);
+		Transaction t = new Transaction(desc, amount);
 		insertTransaction(t);
 		updateBalance(getBalance());
 		return true;

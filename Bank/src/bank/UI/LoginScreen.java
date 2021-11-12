@@ -40,6 +40,10 @@ public class LoginScreen extends JPanel {
 			MainScreen main = new MainScreen(cust);
 			parent.add(main, "Main");
 			card.show(parent, "Main");
+			
+			incorrectLogin.setVisible(false);
+			ID.setText("");
+			password.setText("");
 		} catch (Exception exc) {
 			incorrectLogin.setVisible(true);
 		}

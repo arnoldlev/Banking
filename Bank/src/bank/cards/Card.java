@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 import bank.accounts.Transaction;
+import bank.customer.Customer;
 
 public abstract class Card {
 	
@@ -92,12 +93,15 @@ public abstract class Card {
 	}
 	
 	/**
-	 * Adds a Transaction to the Card
-	 * @implNote If card is a CreditCard, it will update the balance. If card is a DebitCard, it will update the balance of the associated Checking Account
+	 * Adds a Transaction to the Card Database
 	 * @param transaction Transaction object
-	 * @return 0 if successful, 1 if invalid funds, or 2 for SQLException
+	 * @return  true if successful, else false
 	 */
-	public abstract int insertTransaction(Transaction transaction);
+	public boolean insertTransaction(Transaction transaction) {
+		//TODO:
+		
+		return false;
+	}
 	
 	/**
 	 * @return Retrieve all transactions
