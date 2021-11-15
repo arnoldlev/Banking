@@ -102,7 +102,7 @@ public class Customer {
 		
 		try {
     		Connection con = DatabaseManager.getConnection();
-    		PreparedStatement stat = con.prepareStatement("SELECT * FROM CardTransactions JOIN Transactions ON CardTransactions.trasactionID=Transactions.transactionID where cardNumber = ?");
+    		PreparedStatement stat = con.prepareStatement("SELECT * FROM CardTransactions JOIN Transactions ON CardTransactions.transactionID=Transactions.transactionID where cardNumber = ?");
     		stat.setString(1, card.getCardNumber());
     		ResultSet rs = stat.executeQuery();
     		while (rs.next()) {

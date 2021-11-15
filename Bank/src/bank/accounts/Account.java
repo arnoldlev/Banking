@@ -40,47 +40,26 @@ public abstract class Account {
 		this.accountID = accountID; 
 	}
 
-	/**
-	 * @return Available balance to use
-	 */
 	public double getBalance() {
 		return balance;
 	}
 
-	/**
-	 * @param balance Balance to set available
-	 * @implNote Balance can be negative!
-	 */
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 
-	/**
-	 * @return Get date account was created
-	 */
 	public Date getOpenDate() {
 		return openDate;
 	}
 
-	/**
-	 * @param openDate set when the account was opened
-	 * @apiNote Private because this should not be changed outside
-	 */
 	private void setOpenDate(Date openDate) {
 		this.openDate = openDate;
 	}
 	
-	/**
-	 * @return Retrieve all transactions
-	 */
 	public ArrayList<Transaction> getTransactions() {
 		return transactions;
 	}
 
-	/**
-	 * @param transactions Set the transactions retrieved from database
-	 * @apiNote Private because this should not be changed outside
-	 */
 	private void setTransactions(ArrayList<Transaction> transactions) {
 		this.transactions = transactions;
 	}

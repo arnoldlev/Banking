@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import bank.accounts.Transaction;
-import bank.customer.Customer;
 import bank.main.DatabaseManager;
 
 public class CreditCard extends Card {
@@ -25,18 +24,11 @@ public class CreditCard extends Card {
 		setAvaliableBalance(bal);
 	}
 
-	/**
-	 * @return Get the interest rate
-	 */
+	
 	public double getInterest() {
 		return interest;
 	}
 
-
-	/**
-	 * @param interest The interest rate to set
-	 * @return True if parameter is greater than 0
-	 */
 	public boolean setInterest(double interest) {
 		if (interest <= 0) {
 			return false;
@@ -45,17 +37,10 @@ public class CreditCard extends Card {
 		return true;
 	}
 
-	/**
-	 * @return The maximum balance allocated
-	 */
 	public double getMaxBalance() {
 		return maxBalance;
 	}
 
-	/**
-	 * @param maxBalance Set the maximum balance allowed
-	 * @return True if parameter is greater than 0
-	 */
 	public boolean setMaxBalance(double maxBalance) {
 		if (maxBalance <= 0) {
 			return false;
@@ -64,18 +49,10 @@ public class CreditCard extends Card {
 		return true;
 	}
 
-	/**
-	 * @return Available balance left
-	 */
 	public double getAvaliableBalance() {
 		return avaliableBalance;
 	}
 
-	/**
-	 * @param avaliableBalance Available balance left
-	 * @return True if parameter is positive and not greater than maximum balance
-	 * @apiNote This cannot be negative!
-	 */
 	public boolean setAvaliableBalance(double avaliableBalance) {
 		if (avaliableBalance < 0 || avaliableBalance > getMaxBalance()) {
 			return false;
@@ -97,7 +74,7 @@ public class CreditCard extends Card {
 		setAvaliableBalance(getAvaliableBalance() + payment); 
 		Transaction t = new Transaction("Card Payment", payment);
 		try {
-			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE CreditCards SET avaliableBalance = ? WHERE cardNumber = ?");
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE CreditCards SET availableBalance = ? WHERE cardNumber = ?");
 			stat.setDouble(1, getAvaliableBalance());
 			stat.setString(2, getCardNumber());
 			stat.execute();
@@ -115,21 +92,21 @@ public class CreditCard extends Card {
 	 * @param transaction Transaction object
 	 * @return true if successful, else false
 	 */
-	public boolean addTransaction(Transaction transaction){
-		
-		try{
-			if(getAvaliableBalance() >= transaction.getAmount()){
-				PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE CreditCards SET avaliableBalance = ? WHERE cardNumber = ?");
+	public boolean addTransaction(Transaction transaction) {
+		try {
+			if (getAvaliableBalance() >= transaction.getAmount()) {
+				PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("UPDATE CreditCards SET availableBalance = ? WHERE cardNumber = ?");
 				stat.setDouble(1, getAvaliableBalance() - transaction.getAmount());
 				stat.setString(2, getCardNumber());
 				stat.execute();
-				getTransactions().add(transaction);
+				
+				setAvaliableBalance(getAvaliableBalance() - transaction.getAmount());
+				insertTransaction(transaction);
 				return true;
 			} else {
 				return false;
 			}
-			
-		} catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 			return false; 
 		}

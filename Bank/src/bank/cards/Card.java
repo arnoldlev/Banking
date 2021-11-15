@@ -1,12 +1,16 @@
 package bank.cards;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 import bank.accounts.Transaction;
-import bank.customer.Customer;
+import bank.main.DatabaseManager;
 
 public abstract class Card {
 	
@@ -23,20 +27,14 @@ public abstract class Card {
 	}
 	
 	public Card() {
-
-		//Generates Valid CC or Debit Card Number
-		//Uses Luhn's Algorithm to check for validity
-		//Restarts the process if number is invalid
 		Random rand = new Random();
 		final int numOfDigits = 16;
 		String cNumber = "";
 		boolean isValid = false;
 		int nSum = 0;
 		
-		while(!isValid)
-		{
-			for(int i = 0; i < numOfDigits; i++)
-			{
+		while (!isValid) {
+			for(int i = 0; i < numOfDigits; i++) {
 				int digit = rand.nextInt(9) + 1;
 				cNumber = cNumber + (digit);
 				
@@ -61,8 +59,7 @@ public abstract class Card {
 		
 		//Generating the CSV number
 		int csvNum = 0;
-		for(int i = 0; i < 3; i++)
-		{
+		for(int i = 0; i < 3; i++) {
 			csvNum *= 10;
 			csvNum += rand.nextInt(9) + 1;
 		}
@@ -75,73 +72,73 @@ public abstract class Card {
         localCalendar.setTime(date); //Set localCalendar to current date
         localCalendar.add(Calendar.YEAR, 5); //Add five years for expiration
         expireDate = localCalendar.getTime(); //Add the new time to expire date
-
 	}
 	
 	/**
-	 * @return The 16 digit credit card number
+	 * Adds a Transaction to the Card Database and current instance
+	 * @param trans Transaction object
+	 * @apiNote Do not use this to insert data retrieved from database
+	 * @return  true if successful, else false
 	 */
+	public void insertTransaction(Transaction trans) {
+		try {
+			PreparedStatement stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO Transactions(date, description, amount) VALUES (?,?,?)", 
+					Statement.RETURN_GENERATED_KEYS);
+			stat.setDate(1, new java.sql.Date(trans.getDate().getTime()));
+			stat.setString(2, trans.getDescription());
+			stat.setDouble(3, trans.getAmount());
+			stat.execute();
+			
+			ResultSet rs = stat.getGeneratedKeys();
+			if (rs.next()) {
+			    long id = rs.getLong(1);
+			    trans.setTransactionID(id);
+			}
+			
+			stat.close();
+			
+			stat = DatabaseManager.getConnection().prepareStatement("INSERT INTO CardTransactions(transactionID, cardNumber) VALUES (?,?)");
+			stat.setLong(1, trans.getTransactionID());
+			stat.setString(2, getCardNumber());
+			stat.execute();
+			stat.close();
+			
+			getTransactions().add(trans);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public String getCardNumber() {
 		return cardNumber;
 	}
 	
-	/**
-	 * @param cardNumber The 16 digit creditcard number
-	 */
 	private void setCardNumber(String cardNumber) {
 		this.cardNumber = cardNumber; 
 	}
 	
-	/**
-	 * Adds a Transaction to the Card Database
-	 * @param transaction Transaction object
-	 * @return  true if successful, else false
-	 */
-	public boolean insertTransaction(Transaction transaction) {
-		//TODO:
-		
-		return false;
-	}
-	
-	/**
-	 * @return Retrieve all transactions
-	 */
 	public ArrayList<Transaction> getTransactions() {
 		return transactions;
 	}
 
-	/**
-	 * @param transactions Set the transactions retrieved from database
-	 * @apiNote Private because this should not be changed outside
-	 */
 	private void setTransactions(ArrayList<Transaction> transactions) {
 		this.transactions = transactions;
 	}
 	
-	/**
-	 * @return The 3 digit security code
-	 */
 	public int getCsv() {
 		return csv;
 	}
-	
-	/**
-	 * @param csv The 3 digit security code
-	 */
+
 	public void setCsv(int csv) {
 		this.csv = csv;
 	}
 
-	/**
-	 * @return The date when the card is expired
-	 */
 	public Date getExpireDate() {
 		return expireDate;
 	}
 
-	/**
-	 * @param expireDate The date when the card is expired
-	 */
 	public void setExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
 	}

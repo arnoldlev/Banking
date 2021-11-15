@@ -21,17 +21,9 @@ public class CheckingAccount extends Account {
 		setCard(card);
 	}
 
-	/**
-	 * @return The monthly charge for having an open account
-	 */
 	public double getMonthlyCharge() {
 		return monthlyCharge;
 	}
-
-	/**
-	 * @param monthlyCharge Set the monthly charge
-	 * @return True if parameter is greater than 0
-	 */
 	
 	public boolean setMonthlyCharge(double monthlyCharge) {
 		if (monthlyCharge <= 0) {
@@ -41,16 +33,10 @@ public class CheckingAccount extends Account {
 		return true;
 	}
 
-	/**
-	 * @return Reference to the associated DebitCard
-	 */
 	public DebitCard getCard() {
 		return card;
 	}
 
-	/**
-	 * @param card The debitcard attached
-	 */
 	public void setCard(DebitCard card) {
 		this.card = card;
 	}

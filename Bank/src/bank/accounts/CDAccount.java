@@ -21,18 +21,10 @@ public class CDAccount extends Account {
 		setMinDeposit(deposit);
 	}
 
-	/**
-	 * @return The term in years
-	 */
 	public int getTermInYears() {
 		return termInYears;
 	}
 
-
-	/**
-	 * @param termInYears Set the term in years
-	 * @return True if parameter is greater than 0
-	 */
 	public boolean setTermInYears(int termInYears) {
 		if (termInYears <= 0) {
 			return false;
@@ -41,18 +33,11 @@ public class CDAccount extends Account {
 		return true;
 	}
 
-	/**
-	 * @return Get the interest rate
-	 */
 	public double getInterest() {
 		return interest;
 	}
 
 
-	/**
-	 * @param interest The interest rate to set
-	 * @return True if parameter is greater than 0
-	 */
 	public boolean setInterest(double interest) {
 		if (interest <= 0) {
 			return false;
@@ -62,18 +47,11 @@ public class CDAccount extends Account {
 	}
 
 
-	/**
-	 * @return The minimum amount required to deposit
-	 */
 	public double getMinDeposit() {
 		return minDeposit;
 	}
 
 	
-	/**
-	 * @param minDeposit The minimum amount required to deposit
-	 * @return True if parameter is greater than 0
-	 */
 	public boolean setMinDeposit(double minDeposit) {
 		if (minDeposit <= 0) {
 			return false;
@@ -81,6 +59,7 @@ public class CDAccount extends Account {
 		this.minDeposit = minDeposit;
 		return true;
 	}
+	
 	
 	@Override
 	public boolean deposit(double amount, String desc) throws Exception {
