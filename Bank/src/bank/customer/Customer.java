@@ -96,9 +96,6 @@ public class Customer {
 	}
 	
 	private void loadTransactions(Card card) {
-		if (card instanceof DebitCard) {
-			return;
-		}
 		
 		try {
     		Connection con = DatabaseManager.getConnection();
@@ -108,7 +105,7 @@ public class Customer {
     		while (rs.next()) {
     			//int statID, Date date, String desc, double amount
     			Transaction trans = new Transaction(rs.getLong("transactionID"), rs.getDate("date"), rs.getString("description"), rs.getDouble("amount"));
-    			((CreditCard) card).getTransactions().add(trans);
+    			card.getTransactions().add(trans);
     		}
     		rs.close();
     		stat.close();

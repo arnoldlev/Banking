@@ -53,7 +53,6 @@ public class AccountTab extends JPanel {
 				Object[] s = { e.getAccountID(), "CD", "$" + e.getBalance() };
 				tableModel.addRow(s);
 			}
-			
 		});
 		
 		view = new JButton();
