@@ -68,7 +68,7 @@ public class CheckingAccount extends Account {
 	
 	@Override
 	public boolean withdraw(double amount, String desc) {
-		if (amount <= 0) {
+		if (amount <= 0 || amount > card.getAtmLimit()) {
 			return false;
 		}
 		if (getBalance() - amount < 0) {
@@ -84,7 +84,7 @@ public class CheckingAccount extends Account {
 
 	@Override
 	public boolean withdraw(double amount) {
-		if (amount <= 0) {
+		if (amount <= 0 || amount > card.getAtmLimit()) {
 			return false;
 		}
 		if (getBalance() - amount < 0) {
