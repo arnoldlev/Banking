@@ -123,7 +123,7 @@ public class AccountTab extends JPanel {
 			CheckingAccount check = AccountDialogs.createCheckingAccount(frame);
 			if (check != null) {
 				if (customer.addAccount(check)) {
-					JOptionPane.showMessageDialog(frame, "Successfully opened new CD Account!", "Success", JOptionPane.PLAIN_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Successfully opened new Checking Account!", "Success", JOptionPane.PLAIN_MESSAGE);
 					Object[] s = { check.getAccountID(), "Checking", "$" + check.getBalance()};
 					tableModel.addRow(s);
 				} else {
