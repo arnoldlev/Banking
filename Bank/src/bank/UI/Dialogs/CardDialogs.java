@@ -276,7 +276,7 @@ public class CardDialogs {
 		limit.setText("Card Limit: $" + credit.getMaxBalance());
 		limit.setFont(new Font("Tahoma", Font.BOLD, 12));
 		dialog.add(limit);
-		limit.setBounds(185, 55, 115, 15);
+		limit.setBounds(185, 55, 125, 15);
 
 		//---- ok ----
 		ok.setText("Make Payment");

@@ -27,6 +27,8 @@ public abstract class Card {
 	}
 	
 	public Card() {
+		setTransactions(new ArrayList<Transaction>());
+		
 		Random rand = new Random();
 		final int numOfDigits = 16;
 		String cNumber = "";

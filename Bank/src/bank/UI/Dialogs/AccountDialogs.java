@@ -30,6 +30,10 @@ public class AccountDialogs {
 	
 	public static Double deposit(JFrame parent, Account acc) {
 		String val = JOptionPane.showInputDialog(parent, "Enter the amount to deposit: ", "Deposit", JOptionPane.OK_CANCEL_OPTION);
+		if (val == null) {
+			return null;
+		}
+		
 		try {
 			Double amount = Double.parseDouble(val);
 			return amount;
@@ -41,6 +45,9 @@ public class AccountDialogs {
 	
 	public static Double withdraw(JFrame parent, Account acc) {
 		String val = JOptionPane.showInputDialog(parent, "Enter the amount to withdraw: ", "Withdrawal", JOptionPane.OK_CANCEL_OPTION);
+		if (val == null) {
+			return null;
+		}
 		try {
 			Double amount = Double.parseDouble(val);
 			return amount;
