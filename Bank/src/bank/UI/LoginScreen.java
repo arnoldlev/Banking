@@ -36,7 +36,6 @@ public class LoginScreen extends JPanel {
 		
 		try {
 			Customer cust = new Customer(Long.valueOf(ID.getText()), String.valueOf(password.getPassword()));
-			//Customer cust = new Customer(123456789, "corncake21");
 			MainScreen main = new MainScreen(cust);
 			parent.add(main, "Main");
 			card.show(parent, "Main");
