@@ -76,7 +76,7 @@ public class CheckingAccount extends Account {
 		}
 		
 		setBalance(getBalance() - amount);
-		Transaction t = new Transaction(desc, amount);
+		Transaction t = new Transaction("DebitCard - " + desc, amount);
 		insertTransaction(t);
 		updateBalance(getBalance());
 		return true;

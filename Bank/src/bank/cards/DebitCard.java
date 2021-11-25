@@ -54,11 +54,11 @@ public class DebitCard extends Card {
 			return false;
 		}
 		
-		insertTransaction(transaction);
-		
 		if (!acc.withdraw(transaction.getAmount(), transaction.getDescription())) {
 			return false;
 		}
+		
+		insertTransaction(transaction);
 		
 		return true;
 
