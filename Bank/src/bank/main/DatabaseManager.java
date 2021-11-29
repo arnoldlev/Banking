@@ -13,9 +13,9 @@ public class DatabaseManager {
 	
 	// My web host MySQL Database
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://144.217.66.186:3306/arnoldle_bank";
-    private static final String USERNAME = "arnoldle";
-    private static final String PASSWORD = "u[r@4OY7bYl44W";
+    private static final String DATABASE_URL = "jdbc:mysql://144.217.66.186:3306/<removed>";
+    private static final String USERNAME = "<removed>";
+    private static final String PASSWORD = "<removed>";
     
     private static Connection connection;
     private static Properties properties;
